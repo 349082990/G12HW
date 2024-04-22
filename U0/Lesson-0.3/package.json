@@ -1,0 +1,7 @@
+{
+  "devDependencies": {
+    "@types/node": "^20.11.17",
+    "live-server": "^1.2.2",
+    "typescript": "^5.3.3"
+  }
+}

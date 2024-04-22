@@ -1,0 +1,16 @@
+npm i -D typescript ts-node @types/node
+
+npm i -D typescript @types/node live-server  
+
+npx ts-node src/[fileName].ts
+
+tsconfig.json :
+{
+  "compilerOptions": {
+    "target": "ESnext",
+    "module": "CommonJS",
+    "outDir": "dist", //optionally use “” to not use an output folder
+    "sourceMap": true,
+  },
+  "include": ["src/**/*"],
+}
