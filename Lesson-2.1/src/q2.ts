@@ -58,5 +58,16 @@ class Student {
     );
   }
 
-  public weightedAvg(): number {}
+  public weightedAvg(): number {
+    return (
+      ((this.assignmentMark.K / Student.maxMark.K) * Student.weighting.K +
+        (this.assignmentMark.T / Student.maxMark.T) * Student.weighting.T +
+        (this.assignmentMark.C / Student.maxMark.C) * Student.weighting.C +
+        (this.assignmentMark.A / Student.maxMark.A) * Student.weighting.A) /
+      (Student.weighting.K +
+        Student.weighting.T +
+        Student.weighting.C +
+        Student.weighting.A)
+    );
+  }
 }
