@@ -12,6 +12,7 @@ class BankAccount {
   public deposit(depositAmount: number) {
     if (depositAmount > 0) {
       this.balance += depositAmount;
+      return this.balance;
     } else {
       throw new Error(
         "The amount of money you are trying to deposit is invalid"
@@ -22,6 +23,7 @@ class BankAccount {
   public withdraw(withdrawalAmount: number) {
     if (withdrawalAmount <= this.balance) {
       this.balance -= withdrawalAmount;
+      return this.balance;
     } else {
       throw new Error(
         "The amount of money you are trying to withdraw is invalid"
@@ -29,17 +31,17 @@ class BankAccount {
     }
   }
 
-  static getAccounts(accounts: BankAccount[]): void {
+  static getAccounts(accounts: BankAccount[]): string {
     const NUM_ACCOUNTS: number = accounts.length;
     for (let i = 0; i < NUM_ACCOUNTS; i++) {
       const CUR_BANK_ACCOUNT: BankAccount = accounts[i];
-      console.log(
+      return (
         "Full Name: " +
-          `${CUR_BANK_ACCOUNT.firstName}` +
-          " " +
-          `${CUR_BANK_ACCOUNT.lastName}` +
-          "\nBalance: " +
-          `${CUR_BANK_ACCOUNT.balance}`
+        `${CUR_BANK_ACCOUNT.firstName}` +
+        " " +
+        `${CUR_BANK_ACCOUNT.lastName}` +
+        "\nBalance: " +
+        `${CUR_BANK_ACCOUNT.balance}`
       );
     }
   }
