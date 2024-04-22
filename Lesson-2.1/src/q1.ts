@@ -33,9 +33,10 @@ class BankAccount {
 
   static getAccounts(accounts: BankAccount[]): string {
     const NUM_ACCOUNTS: number = accounts.length;
+    let accountInfo: string = "";
     for (let i = 0; i < NUM_ACCOUNTS; i++) {
       const CUR_BANK_ACCOUNT: BankAccount = accounts[i];
-      return (
+      accountInfo += (
         "Full Name: " +
         `${CUR_BANK_ACCOUNT.firstName}` +
         " " +
@@ -43,7 +44,7 @@ class BankAccount {
         "\nBalance: " +
         `${CUR_BANK_ACCOUNT.balance}`
       );
-    }
+      return accountInfo; 
   }
 }
 
