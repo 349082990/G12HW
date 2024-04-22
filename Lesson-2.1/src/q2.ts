@@ -127,7 +127,7 @@ const STUDENT_FOUR: Student = new Student(
 const STUDENT_FIVE: Student = new Student(
   "Mi",
   "Dough",
-  new Grades(15, 50, 12, 20)
+  new Grades(15, 50, 12.5, 20)
 );
 
 const STUDENT_ARR = [
