@@ -58,3 +58,7 @@ const ACCOUNT_THREE: BankAccount = new BankAccount(
   "Stark",
   10000000000000000
 );
+
+ACCOUNT_ONE.withdraw(100);
+ACCOUNT_TWO.deposit(100);
+console.log(BankAccount.getAccounts([ACCOUNT_ONE, ACCOUNT_TWO, ACCOUNT_THREE]));

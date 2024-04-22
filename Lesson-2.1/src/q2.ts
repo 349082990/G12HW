@@ -129,3 +129,13 @@ const STUDENT_FIVE: Student = new Student(
   "Dough",
   new Grades(15, 50, 12, 20)
 );
+
+const STUDENT_ARR = [
+  STUDENT_ONE,
+  STUDENT_TWO,
+  STUDENT_THREE,
+  STUDENT_FOUR,
+  STUDENT_FIVE,
+];
+console.log(Student.classRawAvg(STUDENT_ARR));
+console.log(Student.classWeightedAvg(STUDENT_ARR));
