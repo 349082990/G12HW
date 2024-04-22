@@ -28,14 +28,40 @@ class Video {
       throw new Error("That is not a valid format!");
     }
   }
+
+  public get platforms() {
+    return this._platforms;
+  }
+
+  public set platforms(p: string) {
+    const validPlatforms = [
+      "YouTube",
+      "Netflix",
+      "Prime Videos",
+      "Apple+",
+      "Disney+",
+    ];
+    if (validPlatforms.includes(p)) {
+      this._platforms = p;
+    } else {
+      throw new Error("THat is not a valid platform!");
+    }
+  }
+
+  public videoLength() {
+    return `${Math.floor(this.length / 60)} hours ${Math.floor(
+      this.length % 60
+    )} minutes`;
+  }
+
+  public joinPlatform() {}
 }
 
 class Platform {
   readonly title: string;
-  private _video: string;
+  private video: Video[] = [];
 
-  constructor(title: string, _video: string) {
+  constructor(title: string) {
     this.title = title;
-    this._video = _video;
   }
 }
