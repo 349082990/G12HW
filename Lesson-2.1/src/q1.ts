@@ -45,12 +45,17 @@ class BankAccount {
   }
 }
 
-const ACCOUNT1: BankAccount = new BankAccount("Peter", "Parker", 300);
+const ACCOUNT_ONE: BankAccount = new BankAccount("Peter", "Parker", 300);
 
-const ACCOUNT2: BankAccount = new BankAccount("Steve", "Rogers", 20000);
+const ACCOUNT_TWO: BankAccount = new BankAccount("Steve", "Rogers", 20000);
 
-const ACCOUNT3: BankAccount = new BankAccount(
+const ACCOUNT_THREE: BankAccount = new BankAccount(
   "Tony",
   "Stark",
   10000000000000000
 );
+
+console.log(ACCOUNT_THREE.withdraw(999999));
+console.log(ACCOUNT_TWO.deposit(500));
+
+console.log(BankAccount.getAccounts([ACCOUNT_ONE, ACCOUNT_TWO, ACCOUNT_THREE]));
