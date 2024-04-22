@@ -36,15 +36,16 @@ class BankAccount {
     let accountInfo: string = "";
     for (let i = 0; i < NUM_ACCOUNTS; i++) {
       const CUR_BANK_ACCOUNT: BankAccount = accounts[i];
-      accountInfo += (
+      accountInfo +=
         "Full Name: " +
         `${CUR_BANK_ACCOUNT.firstName}` +
         " " +
         `${CUR_BANK_ACCOUNT.lastName}` +
         "\nBalance: " +
-        `${CUR_BANK_ACCOUNT.balance}`
-      );
-      return accountInfo; 
+        `${CUR_BANK_ACCOUNT.balance}` +
+        "\n\n";
+    }
+    return accountInfo;
   }
 }
 
