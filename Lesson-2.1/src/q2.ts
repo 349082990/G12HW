@@ -60,6 +60,14 @@ class Student {
   }
 
   public weightedAvg(): number {
+    if (
+      this.assignmentMark.K > Student.maxMark.K ||
+      this.assignmentMark.T > Student.maxMark.T ||
+      this.assignmentMark.C > Student.maxMark.C ||
+      this.assignmentMark.A > Student.maxMark.A
+    ) {
+      throw new Error("Invalid assignment mark!");
+    }
     return (
       (((this.assignmentMark.K / Student.maxMark.K) * Student.weighting.K +
         (this.assignmentMark.T / Student.maxMark.T) * Student.weighting.T +
