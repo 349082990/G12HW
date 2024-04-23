@@ -2,13 +2,13 @@ class Video {
   readonly title: string;
   readonly length: number;
   private _format: string;
-  private _platforms: string;
+  private _platforms: Platform[] = [];
 
   constructor(
     title: string,
     length: number,
     _format: string,
-    _platforms: string
+    _platforms: Platform[]
   ) {
     this.title = title;
     this.length = length;
@@ -29,11 +29,12 @@ class Video {
     }
   }
 
-  public get platforms() {
+  public get platforms(): Platform[] {
     return this._platforms;
   }
 
-  public set platforms(p: string) {
+  public set platforms(platforms: Platform[]) {
+    const NUM_PLATFORMS = platforms.length;
     const validPlatforms = [
       "YouTube",
       "Netflix",
@@ -41,10 +42,12 @@ class Video {
       "Apple+",
       "Disney+",
     ];
-    if (validPlatforms.includes(p)) {
-      this._platforms = p;
-    } else {
-      throw new Error("THat is not a valid platform!");
+    for (let i = 0; i < NUM_PLATFORMS; i++) {
+      if (validPlatforms.includes(platforms[i].title)) {
+        this._platforms.push(platforms[i]);
+      } else {
+        throw new Error("THat is not a valid platform!");
+      }
     }
   }
 
@@ -54,14 +57,59 @@ class Video {
     )} minutes`;
   }
 
-  public joinPlatform() {}
+  public joinPlatform(platform: Platform) {
+    // Check if already have platform (platforms is from getter)
+    if (!this.platforms.includes(platform)) {
+      this.platforms = [platform];
+      platform.addVideo(this);
+    }
+  }
+
+  public leavePlatform(platform: Platform) {
+    const index = this._platforms.indexOf(platform);
+    // If it IS in the array
+    if (index !== -1) {
+      this._platforms.splice(index, 1);
+      platform.removeVideo(this);
+    }
+  }
 }
 
 class Platform {
-  readonly title: string;
-  private video: Video[] = [];
+  private _title: string;
+  private _videos: Video[] = [];
 
-  constructor(title: string) {
-    this.title = title;
+  constructor(_title: string, videos: Video[]) {
+    this._title = _title;
+    this._videos = videos;
+  }
+
+  public get title() {
+    return this._title;
+  }
+
+  public addVideo(video: Video) {
+    this._videos.push(video);
+    video.joinPlatform(this);
+  }
+
+  public createVideo(title: string, length: number, format: string) {
+    const newVideo = new Video(title, length, format, [this]);
+    this.addVideo(newVideo);
+  }
+
+  public removeVideo(video: Video) {
+    const CUR_INDEX = this._videos.indexOf(video);
+    if (CUR_INDEX !== -1) {
+      this._videos.splice(CUR_INDEX, 1);
+      video.leavePlatform(this);
+    }
+  }
+
+  public listVideo() {
+    const NUM_VIDEOS = this._videos.length;
+    for (let i = 0; i < NUM_VIDEOS; i++) {
+      console.log(this._videos);
+    }
   }
 }
