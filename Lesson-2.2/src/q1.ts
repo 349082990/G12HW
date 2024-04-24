@@ -12,8 +12,8 @@ class Video {
   ) {
     this.title = title;
     this.length = length;
-    this._format = _format;
-    this._platforms = _platforms;
+    this.format = _format;
+    this.platforms = _platforms;
   }
 
   public get format() {
