@@ -1,6 +1,6 @@
 class BulkTank {
-  private _capacity: number;
-  private amount: number = 0;
+  private _capacity: number = 0;
+  private _amount: number = 0;
 
   constructor(capacity: number = 2000) {
     this.capacity = capacity;
@@ -18,15 +18,21 @@ class BulkTank {
     }
   }
 
-  public addtoTank(amount: number) {
-    if (this.amount + amount <= this._capacity) {
-      this.amount + amount;
+  public addtoTank(addAmount: number): void {
+    if (this._amount + addAmount <= this._capacity) {
+      this._amount + addAmount;
     } else {
-      this.amount = this._capacity;
+      this._amount = this._capacity;
     }
   }
 
-  public getFromTank() {}
+  public getFromTank(getAmount: number): void {
+    if (this._amount - getAmount <= this.capacity) {
+      this._amount - getAmount;
+    } else {
+      this._amount = 0;
+    }
+  }
 }
 
 class Cow {}

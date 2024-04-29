@@ -1,130 +1,91 @@
-public listVideo() {
-    // return a list of all the videos in the platform
-    let vids: string[] = [];
-    for (const video of this._videos) {
-      vids.push(video.title);
-    }
-    return vids;
-  }
-class Video {
-  readonly title: string;
-  private _length: number;
-  private _format: string;
-  private _platforms: Platform[];
-
-  constructor(
-    title: string,
-    length: number,
-    format: string,
-    platforms: Platform[]
-  ) {
-    this.title = title;
-    this._length = length;
-    this._format = format;
-    this._platforms = platforms;
+class BulkTank {
+  private capacity: number;
+  private amount: number = 0;
+  constructor(capacity: number = 2000) {
+    this.capacity = capacity;
   }
 
-  public get platforms() {
-    return this._platforms;
-  }
-
-  public get format() {
-    return this._format;
-  }
-
-  public set format(val: string) {
-    const types = ["movie", "show"];
-    if (types.includes(val)) {
-      this._format = val;
+  public addToTank(amount: number): void {
+    if (this.amount + amount <= this.capacity) {
+      this.amount += amount;
     } else {
-      throw new Error("Invalid format");
+      this.amount = this.capacity;
     }
   }
 
-  public set platforms(platforms: Platform[]) {
-    const types = ["YouTube", "Netflix", "Prime Videos", "Apple+", "Disney+"];
-    if (platforms.length > 0) {
-      for (const platform of platforms) {
-        if (types.includes(platform.title)) {
-          this._platforms.push(platform);
-        } else {
-          throw new Error("Invalid platform");
-        }
-      }
+  public getFromTank(amount: number): void {
+    if (this.amount - amount >= 0) {
+      this.amount -= amount;
     } else {
-      this._platforms = [];
+      this.amount = 0;
     }
   }
 
-  public movieLength() {
-    // return the length of the movie in hours and minutes
-    return ${Math.floor(this._length / 60)}h ${this._length % 60}m;
-  }
-
-  public joinPlatform(platform: Platform) {
-    // add the platform to the list of platforms
-    if (!this.platforms.includes(platform)) {
-      this.platforms = [platform];
-      platform.addVideo(this);
-    }
-  }
-
-  public removePlatform(platform: Platform) {
-    // remove the platform from the list of platforms
-    const index = this._platforms.indexOf(platform);
-    if (index !== -1) {
-      this._platforms.splice(index, 1);
-      platform.removeVideo(this);
-    }
-  }
-}
-class Platform {
-  private _title: string;
-  private _videos: Video[];
-  constructor(title: string, videos: Video[]) {
-    this._title = title;
-    this._videos = videos;
-  }
-
-  public get title() {
-    return this._title;
-  }
-
-  public addVideo(video: Video) {
-    // add the video to the list of videos
-    if (!this._videos.includes(video)) {
-      this._videos.push(video);
-      video.joinPlatform(this);
-    }
-  }
-
-  public createVideo(title: string, length: number, format: string) {
-    // create a new video and add it to the list of videos
-    const newVideo = new Video(title, length, format, [this]);
-    this.addVideo(newVideo);
-  }
-
-  public removeVideo(video: Video) {
-    // remove the video from the list of videos
-    const index = this._videos.indexOf(video);
-    if (index !== -1) {
-      this._videos.splice(index, 1);
-      video.removePlatform(this);
-    }
-  }
-
-  public listVideo() {
-    // return a list of all the videos in the platform
-    let vids: string[] = [];
-    for (const video of this._videos) {
-      vids.push(video.title);
-    }
-    return vids;
+  public getCapacity(): string {
+    return this.amount + "/" + this.capacity;
   }
 }
 
-const platform4 = new Platform("Netflix", []);
-platform4.createVideo("Sci-fi Thriller", 140, "movie");
-console.log(platform4.listVideo()); // Expected to show details of the created video.
-platform4.removeVideo(platform4._videos[0]);
-console.log(platform4.listVideo()); // Expected to be empty, showing no videos.
+class Cow {
+  private name: string;
+  private udder: number = Math.floor(Math.random() * 26) + 15;
+  private amount: number = 0;
+  private milkable: boolean = true;
+  constructor(name: string | null = null) {
+    const names = [
+      "Anu",
+      "Arpa",
+      "Essi",
+      "Heluna",
+      "Hely",
+      "Hento",
+      "Hilke",
+      "Hilsu",
+      "Hymy",
+      "Ihq",
+      "Ilme",
+      "Ilo",
+      "Jaana",
+      "Jami",
+      "Jatta",
+      "Laku",
+      "Liekki",
+      "Mainikki",
+      "Mella",
+      "Mimmi",
+      "Naatti",
+      "Nina",
+      "Nyytti",
+      "Papu",
+      "Pullukka",
+      "Pulu",
+      "Rima",
+      "Soma",
+      "Sylkki",
+      "Valpu",
+      "Virpi",
+    ];
+    if (name) {
+      this.name = name;
+    } else {
+      this.name = names[Math.floor(Math.random() * (names.length + 1))];
+    }
+  }
+
+  public milk(): void {
+    this.amount = 0;
+  }
+
+  public getCapacity(): string {
+    return this.name + " " + this.amount + "/" + this.udder;
+  }
+
+  public hourPast(): void {
+    const newMilk = Math.floor(Math.random() * 2.3) + 0.7;
+    if (this.amount + newMilk <= this.udder) {
+      this.amount += newMilk;
+    } else {
+      this.amount = this.udder;
+    }
+  }
+}
