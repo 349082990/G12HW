@@ -1,11 +1,20 @@
 class BulkTank {
-  private _curCapacity: number;
-  private _maxCapacity: number;
+  private _capacity: number;
+  private amount: number = 0;
 
-  constructor(curCapacity: number, maxCapacity: number) {
-    this.curCapacity = curCapacity;
-    this.maxCapacity = maxCapacity;
+  constructor(capacity: number = 2000) {
+    this._capacity = capacity;
   }
+
+  public addtoTank(amount: number) {
+    if (this.amount + amount <= this._capacity) {
+      this.amount + amount;
+    } else {
+      this.amount = this._capacity;
+    }
+  }
+
+  public getFromTank() {}
 }
 
 class Cow {}
