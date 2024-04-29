@@ -121,7 +121,21 @@ class Cow {
   }
 }
 
-class MilkingRobots {}
+class MilkingRobots {
+  private _bulkTank: BulkTank | null = null;
+
+  public setBulkTank(bulkTank: BulkTank) {
+    this._bulkTank = bulkTank;
+  }
+
+  public milk(whichCow: Cow) {
+    if (this._bulkTank) {
+      this._bulkTank.addtoTank(whichCow.milk());
+    } else {
+      throw new Error("Milking robot hasn't been installed with a BulkTank");
+    }
+  }
+}
 
 class Barn {}
 
