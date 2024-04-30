@@ -185,13 +185,62 @@ class Barn {
   }
 }
 
-class Farm {}
+class Farm {
+  private _owner: string = "";
+  private _barn: Barn | undefined = undefined;
+
+  constructor(owner: string, barn: Barn) {
+    this.owner = owner;
+    this.barn = barn;
+  }
+
+  public get owner(): string {
+    return this._owner;
+  }
+
+  private set owner(owner: string) {
+    if (owner !== "") {
+      this._owner = owner;
+    } else {
+      throw new Error("Owner's name cannot be empty.");
+    }
+  }
+
+  private get barn(): Barn {
+    if (!this._barn) {
+      throw new Error("No barns exist on this farm.");
+    }
+    return this._barn;
+  }
+
+  private set barn(barn: Barn) {
+    this._barn = barn;
+  }
+
+  public manageCows(): void {
+    this.barn.takeCareOf();
+  }
+
+  public addCow(cow: Cow): void {
+    this.barn.addCow(cow);
+  }
+
+  public hourPast(): void {
+    for (const cow of this.barn.cowList) {
+      cow.hourPast();
+    }
+  }
+
+  public installMilkingRobot(robot: MilkingRobot): void {
+    this.barn.installMilkingRobot(robot);
+  }
+}
 
 const barn = new Barn(new BulkTank());
 console.log("Barn: " + barn.getCapacity());
 
-const MILKINGROBOT = new MilkingRobot();
-barn.installMilkingRobot(MILKINGROBOT);
+const robot = new MilkingRobot();
+barn.installMilkingRobot(robot);
 
 const ammu = new Cow("Ammu");
 ammu.hourPast();
