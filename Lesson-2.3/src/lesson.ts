@@ -75,10 +75,18 @@ class EmployeeFactory {
 
 class Roster {
   //should have roster class
-  private _manager: Manager[] = [];
+  private _managers: Manager[] = [];
   private _directors: Director[] = [];
 
   constructor() {}
+
+  public get managers(): Manager[] {
+    return this._managers;
+  }
+
+  public get directors(): Director[] {
+    return this._directors;
+  }
 }
 
 class Client {
