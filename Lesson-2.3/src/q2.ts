@@ -136,21 +136,14 @@ class MilkingRobot {
 }
 
 class Barn {
-  private _bulkTank: BulkTank;
   private _cows: Cow[] = [];
-  private _milkingRobot: MilkingRobot | null = null;
+  private _milkingRobot: MilkingRobot | undefined;
 
-  constructor(bulkTank: BulkTank) {
-    this._bulkTank = bulkTank;
-  }
-
-  public get bulkTank(): BulkTank {
-    return this._bulkTank;
-  }
+  constructor(private tank: BulkTank) {}
 
   public set bulkTank(presentBulkTank: BulkTank) {
     if (presentBulkTank) {
-      this._bulkTank = presentBulkTank;
+      this.bulkTank = presentBulkTank;
     } else {
       throw new Error(
         "Bulktank is no present! It must be instantiated with an existing BulkTank. "
@@ -159,7 +152,20 @@ class Barn {
   }
 
   public getCapacity() {
-    return this._bulkTank.getCapacity();
+    return this.bulkTank.getCapacity();
+  }
+
+  private get milkingRobot() {
+    if (this._milkingRobot === undefined) {
+      throw new Error("A milking robot is not attached to this barn! ");
+    } else {
+      return this._milkingRobot;
+    }
+  }
+
+  public installMilkingRobot(newRobot: MilkingRobot) {
+    this._milkingRobot = newRobot;
+    this._milkingRobot.setBulkTank(this.tank);
   }
 
   public get cows(): Cow[] {
