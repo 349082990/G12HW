@@ -142,13 +142,12 @@ class Barn {
   constructor(private tank: BulkTank) {}
 
   public set bulkTank(presentBulkTank: BulkTank) {
-    if (presentBulkTank) {
-      this.bulkTank = presentBulkTank;
-    } else {
+    if (!presentBulkTank) {
       throw new Error(
-        "Bulktank is no present! It must be instantiated with an existing BulkTank. "
+        "BulkTank is not present! It must be instantiated with an existing BulkTank."
       );
     }
+    this.tank = presentBulkTank;
   }
 
   public getCapacity(): string {
@@ -156,11 +155,10 @@ class Barn {
   }
 
   private get milkingRobot() {
-    if (this._milkingRobot === undefined) {
-      throw new Error("A milking robot is not attached to this barn! ");
-    } else {
-      return this._milkingRobot;
+    if (!this._milkingRobot) {
+      throw new Error("A milking robot is not attached to this barn!");
     }
+    return this._milkingRobot;
   }
 
   public installMilkingRobot(newRobot: MilkingRobot) {
@@ -172,25 +170,17 @@ class Barn {
     return this._cowList;
   }
 
-  public addCow(cow: Cow) {
-    this.cowList.push(cow);
+  public addCow(cow: Cow): void {
+    this._cowList.push(cow);
   }
 
   public takeCareOf(cow: Cow | null = null): void {
-    if (this.milkingRobot) {
-      if (cow === null) {
-        // milk everything
-        for (let i = 0; i < this.cowList.length; i++) {
-          const COWS: Cow = this.cowList[i];
-          this.milkingRobot.milk(COWS);
-        }
+    if (cow === null) {
+      for (const COW of this._cowList) {
+        this.milkingRobot.milk(COW);
       }
-      if (this.cowList.includes(cow)) {
-        // Milk only the chosen cow
-        this.milkingRobot.milk(cow);
-      } else {
-        throw new Error("NIGGER");
-      }
+    } else if (this._cowList.includes(cow)) {
+      this.milkingRobot.milk(cow);
     }
   }
 }
