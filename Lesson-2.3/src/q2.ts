@@ -7,20 +7,20 @@ class BulkTank {
   }
 
   public get tankCapacity(): number {
-    return this.tankCapacity;
+    return this._tankCapacity;
   }
 
   public set tankCapacity(value: number) {
     if (value > 0) {
-      this.tankCapacity = 0;
+      this._tankCapacity = value;
     } else {
       throw new Error("You cannot input a negative number! Please try again. ");
     }
   }
 
-  public addtoTank(addAmount: number): void {
+  public addToTank(addAmount: number): void {
     if (this._tankAmount + addAmount <= this._tankCapacity) {
-      this._tankAmount + addAmount;
+      this._tankAmount += addAmount;
     } else {
       this._tankAmount = this._tankCapacity;
     }
@@ -39,12 +39,12 @@ class BulkTank {
   }
 }
 
+// The checkcapacity and milk method are not working
 class Cow {
   private _names: string;
   private _udderAmount: number = 0;
-  private _isMilkable: boolean = false;
   readonly udderCapacity: number = Math.floor(Math.random() * 26) + 15; // (max - min + 1) + min
-  constructor(names: string | null = null) {
+  constructor(name: string | null = null) {
     const NAMES = [
       "Anu",
       "Arpa",
@@ -78,23 +78,15 @@ class Cow {
       "Valpu",
       "Virpi",
     ];
-    if (NAMES) {
-      this._names = names;
+    if (name) {
+      this._names = name;
     } else {
-      this._names = NAMES[Math.floor(Math.random() * names.length)];
+      this._names = NAMES[Math.floor(Math.random() * NAMES.length)];
     }
   }
 
   public getCapacity(): string {
     return `${this._names} ${this._udderAmount}/${this.udderCapacity}`;
-  }
-
-  public checkCapacity(): void {
-    if (this._udderAmount >= this.udderCapacity) {
-      this._isMilkable = true;
-    } else {
-      this._isMilkable = false;
-    }
   }
 
   public hourPast(): void {
@@ -106,37 +98,82 @@ class Cow {
     }
   }
 
-  public milk(): number {
-    this.checkCapacity();
-
-    if (!this._isMilkable) {
-      throw new Error(
-        "The cow isn't ready to be milked! It's udder is empty. "
-      );
+  public set udderAmount(value: number) {
+    if (value > 0) {
+      this._udderAmount = value;
+    } else {
+      throw new Error("Invalid number. Cow cannot be milked! ");
     }
+  }
 
+  public milk(): number {
     const AMOUNT_EXTRACTED = this._udderAmount;
     this._udderAmount = 0;
     return AMOUNT_EXTRACTED;
   }
 }
 
-class MilkingRobots {
+class MilkingRobot {
   private _bulkTank: BulkTank | null = null;
 
-  public setBulkTank(bulkTank: BulkTank) {
-    this._bulkTank = bulkTank;
+  constructor(bulkTank: BulkTank | null = null) {
+    if (bulkTank) {
+      this._bulkTank = bulkTank;
+    }
+  }
+
+  public setBulkTank(tank: BulkTank): void {
+    this._bulkTank = tank;
   }
 
   public milk(whichCow: Cow) {
     if (this._bulkTank) {
-      this._bulkTank.addtoTank(whichCow.milk());
+      this._bulkTank.addToTank(whichCow.milk());
     } else {
       throw new Error("Milking robot hasn't been installed with a BulkTank");
     }
   }
 }
 
-class Barn {}
+class Barn {
+  private _bulkTank: BulkTank;
+  private _cows: Cow[] = [];
+  private _milkingRobot: MilkingRobot | null = null;
+
+  constructor(bulkTank: BulkTank) {
+    this._bulkTank = bulkTank;
+  }
+
+  public get bulkTank(): BulkTank {
+    return this._bulkTank;
+  }
+
+  public set bulkTank(presentBulkTank: BulkTank) {
+    if (presentBulkTank) {
+      this._bulkTank = presentBulkTank;
+    } else {
+      throw new Error(
+        "Bulktank is no present! It must be instantiated with an existing BulkTank. "
+      );
+    }
+  }
+
+  public getCapacity() {
+    return this._bulkTank.getCapacity();
+  }
+
+  public get cows(): Cow[] {
+    return this._cows;
+  }
+
+  public addCow(cow: Cow) {
+    this._cows.push(cow);
+  }
+
+  public takeCareOf(cow: Cow) {
+    if (this._milkingRobot) {
+    }
+  }
+}
 
 class Farm {}

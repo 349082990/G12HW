@@ -18,6 +18,22 @@ class BulkTank {
     return this._capacity;
   }
 
+  public getCapacity(): string {
+    return this._amount + "/" + this._capacity;
+  }
+
+  public set amount(value: number) {
+    if (value >= 0) {
+      this._amount = value;
+    } else {
+      throw new Error("Amount cannot be negative.");
+    }
+  }
+
+  public get amount(): number {
+    return this._amount;
+  }
+
   public addToTank(amount: number): void {
     if (this._amount + amount <= this._capacity) {
       this._amount += amount;
@@ -33,17 +49,12 @@ class BulkTank {
       this._amount = 0;
     }
   }
-
-  public getCapacity(): string {
-    return this._amount + "/" + this._capacity;
-  }
 }
 
 class Cow {
   private _name: string;
   readonly udder: number = Math.floor(Math.random() * 26) + 15;
   private _amount: number = 0;
-  private _milkable: boolean = true;
 
   constructor(name: string | null = null) {
     const names = [
@@ -81,9 +92,23 @@ class Cow {
     ];
     if (name) {
       this._name = name;
-    } else {
+    } else if (name === null) {
       this._name = names[Math.floor(Math.random() * names.length)];
+    } else {
+      throw new Error("Not a valid name!");
     }
+  }
+
+  public set amount(value: number) {
+    if (value >= 0) {
+      this._amount = value;
+    } else {
+      throw new Error("Amount cannot be negative.");
+    }
+  }
+
+  public get amount(): number {
+    return this._amount;
   }
 
   public getCapacity(): string {
@@ -113,6 +138,10 @@ class MilkingRobot {
     this._bulkTank = bulkTank;
   }
 
+  public getBulkTank(): BulkTank | null {
+    return this._bulkTank;
+  }
+
   public milk(cow: Cow) {
     if (this._bulkTank) {
       this._bulkTank.addToTank(cow.milk());
@@ -124,7 +153,7 @@ class MilkingRobot {
 
 class Barn {
   private _cowList: Cow[] = [];
-  private _milkingRobot: MilkingRobot | null = null;
+  private _milkingRobot: MilkingRobot;
   private _bulkTank: BulkTank;
 
   constructor(bulkTank: BulkTank) {
@@ -146,6 +175,12 @@ class Barn {
   public get cowList(): Cow[] {
     return this._cowList;
   }
+
+  public get milkingRobot(): MilkingRobot {
+    return this._milkingRobot;
+  }
+
+  public set MilkingRobot(value: number) {}
 
   public addCow(cow: Cow) {
     this._cowList.push(cow);
@@ -242,3 +277,191 @@ class Farm {
     }
   }
 }
+
+// Example input 1
+// const tank1 = new BulkTank();
+// tank1.getFromTank(100);
+// tank1.addToTank(25);
+// tank1.getFromTank(5);
+// console.log(tank1.getCapacity());
+
+// const tank2 = new BulkTank(50);
+// tank2.addToTank(100);
+// console.log(tank2.getCapacity());
+
+// output
+// 20/2000
+// 50/50
+
+// Example input 2
+// const cow = new Cow();
+// console.log(cow.getCapacity());
+
+// cow.hourPast();
+// cow.hourPast();
+// cow.hourPast();
+// cow.hourPast();
+
+// console.log(cow.getCapacity());
+
+// cow.milk();
+
+// console.log(cow.getCapacity());
+
+// const cow2 = new Cow("Ammu");
+// console.log(cow2.getCapacity());
+// cow2.hourPast();
+// cow2.hourPast();
+// console.log(cow2.getCapacity());
+
+// cow2.milk();
+
+// console.log(cow2.getCapacity());
+
+//output ex
+// Liekki 0/23
+// Liekki 7/23
+// Liekki 0/23
+// Ammu 0/35
+// Ammu 9/35
+// Ammu 0/35
+
+// Example input 3
+// const milkingRobot = new MilkingRobot();
+// const cow = new Cow();
+// milkingRobot.milk(cow);
+
+//output
+// Error: Milking robot hasn't been installed with a BulkTank
+
+//Example input 4
+// const milkingRobot = new MilkingRobot();
+// const cow = new Cow();
+// const tank = new BulkTank();
+// milkingRobot.setBulkTank(tank);
+// console.log("Bulk tank: " + tank.getCapacity());
+
+// for (let i = 0; i < 2; i++) {
+//     console.log(cow.getCapacity());
+//     for (let j = 0; j < 5; j++) {
+//         cow.hourPast();
+//     }
+//     console.log(cow.getCapacity());
+
+//     console.log("Milking...");
+//     milkingRobot.milk(cow);
+//     console.log("Bulk tank: " + tank.getCapacity());
+// }
+
+//output ex
+// Bulk tank: 0/2000
+// Mella 0/23
+// Mella 6.2/23
+// Milking...
+// Bulk tank: 6.2/2000
+
+// Mella 0/23
+// Mella 7.8/23
+// Milking...
+// Bulk tank: 14/2000
+
+//Example input 5
+// const barn = new Barn(new BulkTank());
+// console.log("Barn: " + barn.getCapacity());
+
+// const robot = new MilkingRobot();
+// barn.installMilkingRobot(robot);
+
+// const ammu = new Cow('Ammu');
+// ammu.hourPast();
+// ammu.hourPast();
+
+// barn.takeCareOf(ammu);
+// console.log("Barn: " + barn.getCapacity());
+
+// barn.addCow(ammu);
+// barn.addCow(new Cow());
+
+// for (let cow of barn.cowList) {
+//     cow.hourPast();
+//     cow.hourPast();
+// }
+
+// barn.takeCareOf();
+// console.log("Barn: " + barn.getCapacity());
+
+//output ex
+// Barn: 0/2000
+// Barn: 2.8/2000
+// Barn: 9.6/2000
+
+//Example input 6
+// const farm = new Farm("Esko", new Barn(new BulkTank()));
+// console.log(farm.logistics());
+
+// console.log(farm.owner + " is a tough guy!");
+
+//output
+// Farm owner: Esko
+// Barn bulk tank: 0/2000
+// No cows.
+// Esko is a tough guy!
+
+//Example input 7
+// const farm = new Farm("Esko", new Barn(new BulkTank()));
+// farm.addCow(new Cow());
+// farm.addCow(new Cow());
+// farm.addCow(new Cow());
+// console.log(farm.logistics());
+
+// output ex
+// Farm owner: Esko
+// Barn bulk tank: 0/2000
+// Animals:
+//         Naatti 0/19
+//         Hilke 0/30
+//         Sylkki 0/29
+
+// Example input 8
+// const farm = new Farm("Esko", new Barn(new BulkTank()));
+
+// farm.addCow(new Cow());
+// farm.addCow(new Cow());
+// farm.addCow(new Cow());
+
+// farm.hourPast();
+// farm.hourPast();
+// console.log(farm.logistics());
+
+// output ex
+// Farm owner: Esko
+// Barn bulk tank: 0/2000
+// Animals:
+//         Heluna 2/17
+//         Rima 3/32
+//         Ilo 3/25
+
+// Example input 9
+// const farm = new Farm("Esko", new Barn(new BulkTank()));
+// const robot = new MilkingRobot();
+// farm.installMilkingRobot(robot);
+
+// farm.addCow(new Cow());
+// farm.addCow(new Cow());
+// farm.addCow(new Cow());
+
+// farm.hourPast();
+// farm.hourPast();
+
+// farm.manageCows();
+
+// // console.log(farm)
+// console.log(farm.logistics());
+
+// output ex
+// Farm owner: Esko
+// Barn bulk tank: 18/2000
+// Animals:
+//         Hilke 0/30
+//         Sylkki 0/35
+//         Hento 0/34
