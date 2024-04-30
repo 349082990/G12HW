@@ -136,7 +136,7 @@ class MilkingRobot {
 }
 
 class Barn {
-  private _cows: Cow[] = [];
+  private _cowList: Cow[] = [];
   private _milkingRobot: MilkingRobot | undefined;
 
   constructor(private tank: BulkTank) {}
@@ -151,8 +151,8 @@ class Barn {
     }
   }
 
-  public getCapacity() {
-    return this.bulkTank.getCapacity();
+  public getCapacity(): string {
+    return this.tank.getCapacity();
   }
 
   private get milkingRobot() {
@@ -168,18 +168,55 @@ class Barn {
     this._milkingRobot.setBulkTank(this.tank);
   }
 
-  public get cows(): Cow[] {
-    return this._cows;
+  public get cowList(): Cow[] {
+    return this._cowList;
   }
 
   public addCow(cow: Cow) {
-    this._cows.push(cow);
+    this.cowList.push(cow);
   }
 
-  public takeCareOf(cow: Cow) {
-    if (this._milkingRobot) {
+  public takeCareOf(cow: Cow | null = null): void {
+    if (this.milkingRobot) {
+      if (cow === null) {
+        // milk everything
+        for (let i = 0; i < this.cowList.length; i++) {
+          const COWS: Cow = this.cowList[i];
+          this.milkingRobot.milk(COWS);
+        }
+      }
+      if (this.cowList.includes(cow)) {
+        // Milk only the chosen cow
+        this.milkingRobot.milk(cow);
+      } else {
+        throw new Error("NIGGER");
+      }
     }
   }
 }
 
 class Farm {}
+
+const barn = new Barn(new BulkTank());
+console.log("Barn: " + barn.getCapacity());
+
+const MILKINGROBOT = new MilkingRobot();
+barn.installMilkingRobot(MILKINGROBOT);
+
+const ammu = new Cow("Ammu");
+ammu.hourPast();
+ammu.hourPast();
+
+barn.takeCareOf(ammu);
+console.log("Barn: " + barn.getCapacity());
+
+barn.addCow(ammu);
+barn.addCow(new Cow());
+
+for (let cow of barn.cowList) {
+  cow.hourPast();
+  cow.hourPast();
+}
+
+barn.takeCareOf();
+console.log("Barn: " + barn.getCapacity());
