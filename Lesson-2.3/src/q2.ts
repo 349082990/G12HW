@@ -187,7 +187,8 @@ class Barn {
 
 class Farm {
   private _owner: string = "";
-  private _barn: Barn | undefined = undefined;
+  private _barn: Barn | null = null;
+  private _cowList: Cow[] = [];
 
   constructor(owner: string, barn: Barn) {
     this.owner = owner;
@@ -206,6 +207,10 @@ class Farm {
     }
   }
 
+  public get cowList(): Cow[] {
+    return this._cowList;
+  }
+
   private get barn(): Barn {
     if (!this._barn) {
       throw new Error("No barns exist on this farm.");
@@ -215,6 +220,22 @@ class Farm {
 
   private set barn(barn: Barn) {
     this._barn = barn;
+  }
+
+  public logistics(): string {
+    let print = `Farm owner: ${this.owner}\n`;
+    if (this.barn) {
+      print += `Barn bulk tank: ${this.barn.getCapacity()}\n`;
+    }
+    if (this.cowList.length === 0) {
+      print += "There are no cows\n";
+    } else {
+      print += "Animals:\n";
+      for (const cow of this.cowList) {
+        print += `\n${cow.getCapacity()}\n`;
+      }
+    }
+    return print;
   }
 
   public manageCows(): void {
@@ -235,27 +256,3 @@ class Farm {
     this.barn.installMilkingRobot(robot);
   }
 }
-
-const barn = new Barn(new BulkTank());
-console.log("Barn: " + barn.getCapacity());
-
-const robot = new MilkingRobot();
-barn.installMilkingRobot(robot);
-
-const ammu = new Cow("Ammu");
-ammu.hourPast();
-ammu.hourPast();
-
-barn.takeCareOf(ammu);
-console.log("Barn: " + barn.getCapacity());
-
-barn.addCow(ammu);
-barn.addCow(new Cow());
-
-for (let cow of barn.cowList) {
-  cow.hourPast();
-  cow.hourPast();
-}
-
-barn.takeCareOf();
-console.log("Barn: " + barn.getCapacity());
