@@ -95,7 +95,7 @@ class Game {
       }
     }
 
-    console.log("=====================");
+    console.log("==============");
 
     this.mainGame();
   }
@@ -103,7 +103,7 @@ class Game {
     while (this.animal[0].health > 0 && this.animal[1].health > 0) {
       this.animal[0].attack(this.animal[1]);
       this.animal[1].attack(this.animal[0]);
-      console.log("======================");
+      console.log("==============");
     }
     this.checkWinner();
   }
