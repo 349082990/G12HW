@@ -4,7 +4,7 @@ import { DisplayMenuAndInvokeItemCommand } from "./command";
 
 class Game {
   private static _instance: Game;
-  private animal: Animal[] = [];
+  private mainMenu: CompositeMenu = new CompositeMenu("Main Menu");
 
   contructor() {
     this.mainLoop();
@@ -16,6 +16,17 @@ class Game {
     }
 
     return Game._instance;
+  }
+
+  public initialize(): void {
+    this.composeMainMenu();
+    this.mainMenu.executeCommand;
+  }
+
+  private composeMainMenu(): void {
+    this.mainMenu.addCommand(
+      new DisplayMenuAndInvokeItemCommand(this.mainMenu)
+    );
   }
 
   public mainLoop() {
