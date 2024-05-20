@@ -40,14 +40,20 @@ class Animal implements Characeristics {
   }
 }
 
+enum Animals {
+  BULL = "Bull",
+  TIGER = "Tiger",
+  EAGLE = "Eagle",
+}
+
 class animalFactory {
   public static make(type: string) {
     switch (type) {
-      case "Bull":
+      case Animals.BULL:
         return new Animal(type, 45, 145, 300);
-      case "Tiger":
+      case Animals.TIGER:
         return new Animal(type, 100, 70, 200);
-      case "Eagle":
+      case Animals.EAGLE:
         return new Animal(type, 75, 110, 250);
       default:
         throw new Error("That is not a valid animal!");
