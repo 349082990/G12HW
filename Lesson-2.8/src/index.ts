@@ -9,6 +9,10 @@ class Canvas {
     this._element.height = 400;
   }
 
+  public get context(): CanvasRenderingContext2D {
+    return this._context;
+  }
+
   public static get instance(): Canvas {
     if (!Canvas._instance) {
       Canvas._instance = new Canvas();
