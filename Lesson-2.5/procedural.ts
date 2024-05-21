@@ -25,6 +25,10 @@ abstract class Animal implements Characteristics {
     return this._species;
   }
 
+  public set species(value: string) {
+    this._species = value;
+  }
+
   public get attackPower(): number {
     return this._attackPower;
   }
@@ -60,6 +64,10 @@ abstract class Animal implements Characteristics {
 
   public get isDead(): boolean {
     return this._isDead;
+  }
+
+  public set isDead(value: boolean) {
+    this._isDead = value;
   }
 
   public set trueDamage(value: number) {
@@ -170,7 +178,6 @@ class Tiger extends Animal {
 
 class Eagle extends Animal {
   public dodge: boolean = false;
-  public trueDamage: number = 0;
   protected accumulatedDamage: number = 0;
   protected specialDamage: number = 0;
 
