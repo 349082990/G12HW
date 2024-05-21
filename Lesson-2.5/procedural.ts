@@ -472,6 +472,9 @@ class Game {
       }
     }
 
+    const computerChoose = promptSync(
+      "0 to pick an animal for computer or 1 for computer to pick randomly"
+    );
     while (!this.animal[1]) {
       const animal2 = promptSync("What is the second animal? ");
 
