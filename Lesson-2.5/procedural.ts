@@ -56,9 +56,6 @@ abstract class Animal implements Characteristics {
   }
 
   public set health(hp: number) {
-    if (hp < 0) {
-      throw new Error("Invalid Health");
-    }
     this._health = hp;
   }
 
@@ -68,6 +65,10 @@ abstract class Animal implements Characteristics {
 
   public set isDead(value: boolean) {
     this._isDead = value;
+  }
+
+  public get trueDamage() {
+    return this._trueDamage;
   }
 
   public set trueDamage(value: number) {
@@ -408,6 +409,26 @@ class MrMa extends Animal {
   }
 }
 
+class SelfDestruct {
+  public static die(playerAnimal: Animal): void {
+    playerAnimal.health = 0;
+    console.log(
+      `${playerAnimal.species} tore a muscle and died. ${playerAnimal.species} has 0 HP now!!!`
+    );
+  }
+}
+
+class Potion {
+  public static boost(playerAnimal: Animal): void {
+    playerAnimal.health += 20;
+    playerAnimal.attackPower += 10;
+    playerAnimal.defensePower += 10;
+    console.log(
+      `${playerAnimal.species} drank a potion and increased its health by 20 hp and attack and defense power by 10`
+    );
+  }
+}
+
 class Game {
   private static _instance: Game;
   private animal: Animal[] = [];
@@ -453,6 +474,13 @@ class Game {
   mainGame() {
     while (this.animal[0].health > 0 && this.animal[1].health > 0) {
       this.animal[0].attack(this.animal[1]);
+      if (Math.random() < 0.1) {
+        Potion.boost(this.animal[0]);
+      }
+      if (Math.random() < 0.01) {
+        SelfDestruct.die(this.animal[0]);
+        break;
+      }
       this.animal[1].attack(this.animal[0]);
       console.log("==============");
     }
