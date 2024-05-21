@@ -432,7 +432,20 @@ class Potion {
 class Game {
   private static _instance: Game;
   private animal: Animal[] = [];
-  private validAnimals: string[] = ["Bull", "Tiger", "Eagle"];
+  readonly validAnimals: AnimalSpecies[] = [
+    AnimalSpecies.AlbinoSkunk,
+    AnimalSpecies.BaldEagle,
+    AnimalSpecies.Bear,
+    AnimalSpecies.Bull,
+    AnimalSpecies.Eagle,
+    AnimalSpecies.GiantTiger,
+    AnimalSpecies.GrizzlyBear,
+    AnimalSpecies.MegaBull,
+    AnimalSpecies.Skunk,
+    AnimalSpecies.Tiger,
+    AnimalSpecies.CaseOh,
+    AnimalSpecies.MrMa,
+  ];
 
   constructor() {
     this.mainLoop();

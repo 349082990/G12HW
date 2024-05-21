@@ -131,7 +131,6 @@ interface Command {
 }
 
 class DisplayMenuAndInvokeItemCommand implements Command {
-  validAnimals: string[] = ["Bull", "Tiger", "Eagle"];
   animal: Animal[] = [];
   constructor(protected menu: CompositeMenu) {}
 
@@ -143,22 +142,6 @@ class DisplayMenuAndInvokeItemCommand implements Command {
       console.log("");
       return this.menu.items[i - 1];
     }
-
-    // while (!this.animal[0]) {
-    //   const animal1 = String(promptSync("What is the first animal? "));
-
-    //   if (this.validAnimals.includes(animal1) === true) {
-    //     this.animal.push(animalFactory.make(animal1));
-    //   }
-    // }
-
-    // while (!this.animal[1]) {
-    //   const animal2 = promptSync("What is the second animal? ");
-
-    //   if (this.validAnimals.includes(animal2) === true) {
-    //     this.animal.push(animalFactory.make(animal2));
-    //   }
-    // }
 
     console.log("==============");
   }
