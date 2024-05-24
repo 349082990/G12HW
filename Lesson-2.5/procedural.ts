@@ -1,3 +1,5 @@
+import { run } from "node:test";
+
 const promptSync = require("prompt-sync")({ sigint: true });
 
 interface Characteristics {
@@ -89,7 +91,7 @@ abstract class Animal implements Characteristics {
     this.displayStats(this.trueDamage, enemy);
   }
 
-  displayStats(trueDamage, enemy) {
+  displayStats(trueDamage: number, enemy: Animal) {
     console.log(`${this.species} did ${trueDamage} damage to ${enemy.species}`);
     console.log(`${enemy.species} now has ${enemy.health} hp`);
   }
@@ -461,27 +463,49 @@ class Game {
 
   public mainLoop() {
     console.log(
-      "Welcome to animal battle! You can choose two animals to fight each other. The options are bull, tiger, and eagle. "
+      `Welcome to animal battle! You can choose two animals to fight each other. The options are ${this.validAnimals} + 'exit' to exit. `
     );
 
+    let running: boolean = true;
+
     while (!this.animal[0]) {
-      const animal1 = promptSync("What is the first animal? ");
+      let animal1 = promptSync("What is the first animal? ");
+
+      if (animal1 === "exit") {
+        running = false;
+        break;
+      }
 
       if (this.validAnimals.includes(animal1) === true) {
         this.animal.push(animalFactory.make(animal1));
       }
     }
 
-    const computerChoose = promptSync(
-      "0 to pick an animal for computer or 1 for computer to pick randomly"
-    );
+    if (!running) return;
+
     while (!this.animal[1]) {
-      const animal2 = promptSync("What is the second animal? ");
+      console.log("What is the computer's animal? ");
+      console.log(`"exit", "random" or ${this.validAnimals}`);
+      let animal2 = promptSync();
+
+      if (animal2 === "exit") {
+        running = false;
+        break;
+      }
+
+      if (animal2 === "random") {
+        const RANDOM: number = Math.floor(
+          Math.random() * (this.validAnimals.length - 1)
+        );
+        animal2 = this.validAnimals[RANDOM];
+      }
 
       if (this.validAnimals.includes(animal2) === true) {
         this.animal.push(animalFactory.make(animal2));
       }
     }
+
+    if (!running) return;
 
     console.log("==============");
 

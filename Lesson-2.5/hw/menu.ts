@@ -2,7 +2,7 @@ import { Command, DisplayMenuAndInvokeItemCommand } from "./command";
 
 // Composite Design Pattern
 interface Menu {
-  description: string;
+  readonly description: string;
   addCommand(c: Command): Menu;
   executeCommand(): void;
 }
@@ -32,13 +32,11 @@ class CompositeMenu implements Menu, DisplayMenu {
 
   //Builder design patter
   public addMenuItem(m: Menu): CompositeMenu {
-    // put validator here
     this._items.push(m);
     return this;
   }
 
   public addCommand(c: Command): CompositeMenu {
-    // add validation ehre
     this.command = c;
     return this;
   }
