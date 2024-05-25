@@ -8,12 +8,20 @@ class GameObject {
   ) {}
 
   public draw() {
+    console.log(this.x, this.w);
     Canvas.instance.context.fillStyle = this.colour;
-    Canvas.instance.context?.rect(this.x, this.y, this.w, this.h);
-    Canvas.instance.fill;
+    Canvas.instance.context.fillRect(this.x, this.y, this.w, this.h);
   }
 }
 
 class Hero extends GameObject {
   private moveSpd: number = 1;
+
+  public moveRight() {
+    this.x += this.moveSpd;
+  }
+
+  public moveDown() {
+    this.y += this.moveSpd;
+  }
 }
