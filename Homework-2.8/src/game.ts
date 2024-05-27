@@ -1,7 +1,7 @@
 class Game {
   private objects: GameObject[] = [
-    new GameObject(70, 70, 50, 50, "green"),
-    new GameObject(200, 250, 30, 30, "blue"),
+    new GameObject(70, 70, 200, 200, "green"),
+    new GameObject(200, 250, 70, 30, "blue"),
   ];
 
   private _ball: Ball = new Ball(
