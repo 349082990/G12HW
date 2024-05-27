@@ -30,63 +30,6 @@ class Canvas {
   }
 }
 
-class Controller {
-  constructor(private hero: Hero) {
-    document.addEventListener("keydown", (event) => this.handleKeyDown(event));
-  }
-
-  private handleKeyDown(event: KeyboardEvent) {
-    if (event.key === "d") {
-      this.hero.moveRight();
-      Canvas.instance.context.fillStyle = "white";
-      Canvas.instance.context.fillRect(0, 0, Canvas.WIDTH, Canvas.HEIGHT);
-      this.hero.draw();
-    }
-    if (event.key === "s") {
-      this.hero.moveDown();
-      Canvas.instance.context.fillStyle = "white";
-      Canvas.instance.context.fillRect(0, 0, Canvas.WIDTH, Canvas.HEIGHT);
-      this.hero.draw();
-    }
-  }
-}
-
-class GameObject {
-  constructor(
-    protected x: number,
-    protected y: number,
-    protected w: number,
-    protected h: number,
-    protected colour: string
-  ) {}
-
-  public draw() {
-    console.log(this.x, this.w);
-    Canvas.instance.context.fillStyle = this.colour;
-    Canvas.instance.context.fillRect(this.x, this.y, this.w, this.h);
-  }
-}
-
-class Hero extends GameObject {
-  private moveSpd: number = 1;
-
-  public moveRight() {
-    this.x += this.moveSpd;
-  }
-
-  public moveDown() {
-    this.y += this.moveSpd;
-  }
-}
-
-class Game {
-  private hero = new Hero(0, 0, 50, 50, "pink");
-  private controller = new Controller(this.hero);
-  constructor() {
-    this.hero.draw();
-  }
-}
-
 class Driver {
   constructor() {
     Canvas.instance; //Finished initialize

@@ -32,7 +32,7 @@ class Canvas {
 
 class Driver {
   constructor() {
-    Canvas.instance; //Finished initialize
+    Canvas.instance;
     Canvas.instance.initialize();
   }
 }
