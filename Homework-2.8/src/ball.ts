@@ -3,8 +3,8 @@ class Ball {
   ballSpeedY: number = 250;
 
   private objects: GameObject[] = [
-    new GameObject(70, 70, 50, 50, "green"),
-    new GameObject(200, 250, 30, 30, "blue"),
+    new GameObject(70, 70, 200, 200, "green"),
+    new GameObject(200, 250, 70, 30, "blue"),
   ];
 
   constructor(
@@ -44,7 +44,6 @@ class Ball {
     Canvas.instance.context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
     Canvas.instance.context.fill();
     Canvas.instance.context.closePath();
-    console.log(this.x, this.y);
   }
 
   public ballMovement(d): void {
@@ -55,30 +54,42 @@ class Ball {
 
   private hasCollided(): boolean {
     for (let object of this.objects) {
-      if (
-        this.x <= object.x + object.w &&
-        this.x + this.radius >= object.x &&
-        this.y <= object.y + object.h &&
-        this.y - this.radius >= object.y
-      ) {
+      const closestX = Math.max(
+        object.x,
+        Math.min(this.x, object.x + object.w)
+      );
+      const closestY = Math.max(
+        object.y,
+        Math.min(this.y, object.y + object.h)
+      );
+
+      // Calculate the distance between the circle's center and this closest point
+      const distanceX = this.x - closestX;
+      const distanceY = this.y - closestY;
+
+      // If the distance is less than the circle's radius, an intersection occurs
+      const distanceSquared = distanceX * distanceX + distanceY * distanceY;
+      if (distanceSquared < this.radius * this.radius) {
+        console.log("collision");
         return true;
-      } else {
-        return false;
       }
     }
+    return false;
   }
 
   public checkBallBoundaries(): void {
     if (
-      (!this.hasCollided() && this.x <= 0) ||
-      this.x >= Canvas.WIDTH - this.radius
+      this.hasCollided() ||
+      (!this.hasCollided() && this.x - this.radius <= 0) ||
+      (!this.hasCollided() && this.x >= Canvas.WIDTH - this.radius)
     ) {
       this.ballSpeedX = -this.ballSpeedX;
     }
 
     if (
-      (!this.hasCollided() && this.y <= 0) ||
-      this.y >= Canvas.HEIGHT + this.radius
+      this.hasCollided() ||
+      (!this.hasCollided() && this.y - this.radius <= 0) ||
+      (!this.hasCollided() && this.y >= Canvas.HEIGHT - this.radius)
     ) {
       this.ballSpeedY = -this.ballSpeedY;
     }

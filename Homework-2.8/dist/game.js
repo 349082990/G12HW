@@ -1,7 +1,7 @@
 class Game {
     objects = [
-        new GameObject(70, 70, 50, 50, "green"),
-        new GameObject(200, 250, 30, 30, "blue"),
+        new GameObject(70, 70, 200, 200, "green"),
+        new GameObject(200, 250, 70, 30, "blue"),
     ];
     _ball = new Ball(Canvas.WIDTH / 2, Canvas.HEIGHT / 2, 15, "black");
     FPS = 60;
@@ -22,6 +22,7 @@ class Game {
         this.getDeltaTime();
         this.ball.checkBallBoundaries();
         this.ball.ballMovement(this.deltaTime);
+        this.ball.checkBallBoundaries();
     }
     drawEverything() {
         for (let object of this.objects) {

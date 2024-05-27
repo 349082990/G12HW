@@ -31,6 +31,7 @@ class Game {
     this.getDeltaTime();
     this.ball.checkBallBoundaries();
     this.ball.ballMovement(this.deltaTime);
+    this.ball.checkBallBoundaries();
   }
 
   private drawEverything(): void {
