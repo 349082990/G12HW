@@ -1,5 +1,4 @@
 class Ball {
-  collisionDirection: boolean[] = [];
   ballSpeedX: number = 250;
   ballSpeedY: number = 250;
 
@@ -55,38 +54,20 @@ class Ball {
 
   private hasCollided(): boolean {
     for (let object of this.objects) {
-      const leftCollision = this.x - this.radius == object.x + object.w;
-      const rightCollision = this.x + this.radius == object.x;
-      const topCollision = this.y - this.radius == object.y + object.h;
-      const bottomCollision = this.y + this.radius == object.y;
       if (
         this.x - this.radius <= object.x + object.w &&
         this.x + this.radius >= object.x &&
         this.y - this.radius <= object.y + object.h &&
         this.y + this.radius >= object.y
       ) {
-        this.collisionDirection = [
-          leftCollision,
-          rightCollision,
-          topCollision,
-          bottomCollision,
-        ];
         return true;
+      } else {
+        return false;
       }
     }
-    return false;
   }
 
   public checkBallBoundaries(): void {
-    if (this.hasCollided()) {
-      if (this.collisionDirection[0] || this.collisionDirection[1]) {
-        this.ballSpeedX = -this.ballSpeedX;
-      }
-      if (this.collisionDirection[2] || this.collisionDirection[3]) {
-        this.ballSpeedY = -this.ballSpeedY;
-      }
-    }
-
     if (
       (!this.hasCollided() && this.x - this.radius <= 0) ||
       (!this.hasCollided() && this.x >= Canvas.WIDTH - this.radius)
