@@ -1,137 +1,117 @@
-class MoveCommand {
-    target;
-    deltaX;
-    deltaY;
-    constructor(target, deltaX, deltaY) {
-        this.target = target;
-        this.deltaX = deltaX;
-        this.deltaY = deltaY;
+class Ball {
+    canvas;
+    ctx;
+    width;
+    height;
+    x;
+    y;
+    radius;
+    dx;
+    dy;
+    constructor(canvas, ctx, width, height) {
+        this.canvas = canvas;
+        this.ctx = ctx;
+        this.width = width;
+        this.height = height;
+        this.radius = 15;
+        this.x = canvas.width / 2;
+        this.y = canvas.height / 2;
+        this.dx = Math.random() > 0.5 ? 1 : -1;
+        this.dy = Math.random() > 0.5 ? 1 : -1;
     }
-    execute() {
-        this.target.move(this.deltaX, this.deltaY);
+    draw() {
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        this.ctx.fillStyle = "black";
+        this.ctx.fill();
+        this.ctx.closePath();
     }
-}
-class Canvas {
-    static instance;
-    element;
-    context;
-    game;
-    static WIDTH = 600;
-    static HEIGHT = 400;
-    constructor() {
-        this.element = document.getElementById("game_screen");
-        this.context = this.element.getContext("2d");
-        this.element.width = Canvas.WIDTH;
-        this.element.height = Canvas.HEIGHT;
-    }
-    static getInstance() {
-        if (!Canvas.instance) {
-            Canvas.instance = new Canvas();
+    update() {
+        if (this.x + this.radius >= this.canvas.width ||
+            this.x - this.radius <= 0) {
+            this.dx = -this.dx;
         }
-        return Canvas.instance;
+        if (this.y + this.radius >= this.canvas.height ||
+            this.y - this.radius <= 0) {
+            this.dy = -this.dy;
+        }
+        this.x += this.dx;
+        this.y += this.dy;
     }
-    initializeGame() {
-        this.game = new Game();
-    }
-    getRenderingContext() {
-        return this.context;
+    checkCollisionWithRect(rect) {
+        const ballRight = this.x + this.radius;
+        const ballLeft = this.x - this.radius;
+        const ballTop = this.y - this.radius;
+        const ballBottom = this.y + this.radius;
+        if (ballRight > rect.x &&
+            ballLeft < rect.x + rect.width &&
+            ballBottom > rect.y &&
+            ballTop < rect.y + rect.height) {
+            const xOverlap = Math.min(ballRight - rect.x, rect.x + rect.width - ballLeft);
+            const yOverlap = Math.min(ballBottom - rect.y, rect.y + rect.height - ballTop);
+            if (xOverlap < yOverlap) {
+                this.dx = -this.dx;
+            }
+            else {
+                this.dy = -this.dy;
+            }
+        }
     }
 }
-class GameObject {
+class Rectangle {
+    canvas;
+    ctx;
+    ball;
+    rectWidth;
+    rectHeight;
     x;
     y;
     width;
     height;
-    color;
-    constructor(x, y, width, height, color) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.color = color;
+    constructor(canvas, ctx, ball, rectWidth, rectHeight) {
+        this.canvas = canvas;
+        this.ctx = ctx;
+        this.ball = ball;
+        this.rectWidth = rectWidth;
+        this.rectHeight = rectHeight;
+        this.width = rectWidth;
+        this.height = rectHeight;
+        do {
+            this.x = Math.floor(Math.random() * (canvas.width - this.width));
+            this.y = Math.floor(Math.random() * (canvas.height - this.height));
+        } while (this.isOverlapping(ball));
     }
     draw() {
-        const ctx = Canvas.getInstance().getRenderingContext();
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        this.ctx.fillStyle = "purple";
+        this.ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+    isOverlapping(ball) {
+        return (ball.x + ball.radius > this.x &&
+            ball.x - ball.radius < this.x + this.width &&
+            ball.y + ball.radius > this.y &&
+            ball.y - ball.radius < this.y + this.height);
     }
 }
-class Ball {
-    x;
-    y;
-    radius;
-    color;
-    obstacles;
-    speed = 10;
-    directionX;
-    directionY;
-    initialDirection;
-    constructor(x, y, radius, color, obstacles) {
-        this.x = x;
-        this.y = y;
-        this.radius = radius;
-        this.color = color;
-        this.obstacles = obstacles;
-        this.initialDirection = this.generateRandomDirection();
-        this.directionX = this.initialDirection.dx;
-        this.directionY = this.initialDirection.dy;
-    }
-    generateRandomDirection() {
-        const angle = Math.random() * Math.PI * 2;
-        return { dx: Math.cos(angle), dy: Math.sin(angle) };
-    }
-    draw() {
-        const ctx = Canvas.getInstance().getRenderingContext();
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-        ctx.closePath();
-    }
-    move(deltaX, deltaY) {
-        this.x += deltaX * this.speed;
-        this.y += deltaY * this.speed;
-        this.checkCollision();
-    }
-    checkCollision() {
-        // Collision detection logic with screen bounds and game objects
-        // Simplified for brevity
-    }
+const canvas = document.createElement("canvas");
+canvas.width = 600;
+canvas.height = 400;
+document.body.appendChild(canvas);
+const ctx = canvas.getContext("2d");
+if (!ctx) {
+    throw new Error("Cannot get canvas context");
 }
-class Game {
-    blocks = [];
-    ball;
-    constructor() {
-        this.initializeObjects();
-        this.ball = new Ball(Canvas.WIDTH / 2, Canvas.HEIGHT / 2, 5, "red", this.blocks);
-        setInterval(() => this.gameLoop(), 1000 / 60);
-    }
-    initializeObjects() {
-        // Initialize game blocks and other objects
-    }
-    gameLoop() {
-        this.clearCanvas();
-        this.updateGameObjects();
-        this.drawGameObjects();
-    }
-    clearCanvas() {
-        Canvas.getInstance()
-            .getRenderingContext()
-            .clearRect(0, 0, Canvas.WIDTH, Canvas.HEIGHT);
-    }
-    updateGameObjects() {
-        this.ball.move(this.ball.directionX, this.ball.directionY);
-    }
-    drawGameObjects() {
-        this.blocks.forEach((block) => block.draw());
-        this.ball.draw();
-    }
+const ball = new Ball(canvas, ctx, canvas.width, canvas.height);
+const rect1 = new Rectangle(canvas, ctx, ball, 100, 50);
+const rect2 = new Rectangle(canvas, ctx, ball, 100, 50);
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ball.draw();
+    rect1.draw();
+    rect2.draw();
+    ball.update();
+    ball.checkCollisionWithRect(rect1);
+    ball.checkCollisionWithRect(rect2);
+    requestAnimationFrame(draw);
 }
-class Application {
-    constructor() {
-        const gameCanvas = Canvas.getInstance();
-        gameCanvas.initializeGame();
-    }
-}
-new Application();
+draw();
 //# sourceMappingURL=index.js.map
