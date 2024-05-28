@@ -1,9 +1,9 @@
 class Game {
     objects = [
-        new GameObject(70, 70, 200, 200, "green"),
-        new GameObject(200, 250, 70, 30, "blue"),
+        new GameObject(50, 50, 100, 100, "green"),
+        new GameObject(200, 250, 100, 70, "blue"),
     ];
-    _ball = new Ball(Canvas.WIDTH / 2, Canvas.HEIGHT / 2, 15, "black");
+    _ball = new Ball(Math.floor(Math.random() * (Canvas.WIDTH - 1)), Math.floor(Math.random() * (Canvas.HEIGHT - 1)), 15, "black");
     FPS = 60;
     timeInterval = 1000 / this.FPS;
     deltaTime = 0;

@@ -1,12 +1,12 @@
 class Game {
   private objects: GameObject[] = [
-    new GameObject(70, 70, 200, 200, "green"),
-    new GameObject(200, 250, 70, 30, "blue"),
+    new GameObject(50, 50, 100, 100, "green"),
+    new GameObject(200, 250, 100, 70, "blue"),
   ];
 
   private _ball: Ball = new Ball(
-    Canvas.WIDTH / 2,
-    Canvas.HEIGHT / 2,
+    Math.floor(Math.random() * (Canvas.WIDTH - 1)),
+    Math.floor(Math.random() * (Canvas.HEIGHT - 1)),
     15,
     "black"
   );

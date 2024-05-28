@@ -2,9 +2,9 @@ class Ball {
   ballSpeedX: number = 250;
   ballSpeedY: number = 250;
 
-  private objects: GameObject[] = [
-    new GameObject(70, 70, 200, 200, "green"),
-    new GameObject(200, 250, 70, 30, "blue"),
+  public objects: GameObject[] = [
+    new GameObject(50, 50, 100, 100, "green"),
+    new GameObject(200, 250, 100, 70, "blue"),
   ];
 
   constructor(
@@ -68,6 +68,28 @@ class Ball {
   }
 
   public checkBallBoundaries(): void {
+    if (this.hasCollided) {
+      for (let object of this.objects) {
+        if (this.x - this.radius <= object.x + object.w) {
+          // right side
+          this.x = object.x + object.w + this.radius;
+          this.ballSpeedX = -this.ballSpeedX;
+        } else if (this.x + this.radius >= object.x) {
+          // left side
+          this.x = object.x - this.radius;
+          this.ballSpeedX = -this.ballSpeedX;
+        } else if (this.y - this.radius <= object.y + object.h) {
+          // from bottom
+          this.y = object.y + object.h;
+          this.ballSpeedY = -this.ballSpeedY;
+        } else if (this.y + this.radius >= object.y) {
+          // from top
+          this.y = object.y;
+          this.ballSpeedY = -this.ballSpeedY;
+        }
+      }
+    }
+
     if (
       (!this.hasCollided() && this.x - this.radius <= 0) ||
       (!this.hasCollided() && this.x >= Canvas.WIDTH - this.radius)

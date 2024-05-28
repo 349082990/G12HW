@@ -3,12 +3,11 @@ class Ball {
     _y;
     _radius;
     colour;
-    collisionDirection = [];
     ballSpeedX = 250;
     ballSpeedY = 250;
     objects = [
-        new GameObject(70, 70, 200, 200, "green"),
-        new GameObject(200, 250, 70, 30, "blue"),
+        new GameObject(50, 50, 100, 100, "green"),
+        new GameObject(200, 250, 100, 70, "blue"),
     ];
     constructor(_x, _y, _radius, colour) {
         this._x = _x;
@@ -48,39 +47,47 @@ class Ball {
     }
     hasCollided() {
         for (let object of this.objects) {
-            const leftCollision = this.x - this.radius == object.x + object.w;
-            const rightCollision = this.x + this.radius == object.x;
-            const topCollision = this.y - this.radius == object.y + object.h;
-            const bottomCollision = this.y + this.radius == object.y;
             if (this.x - this.radius <= object.x + object.w &&
                 this.x + this.radius >= object.x &&
                 this.y - this.radius <= object.y + object.h &&
                 this.y + this.radius >= object.y) {
-                this.collisionDirection = [
-                    leftCollision,
-                    rightCollision,
-                    topCollision,
-                    bottomCollision,
-                ];
                 return true;
             }
+            else {
+                return false;
+            }
         }
-        return false;
     }
     checkBallBoundaries() {
-        if (this.hasCollided()) {
-            if (this.collisionDirection[0] || this.collisionDirection[1]) {
-                this.ballSpeedX = -this.ballSpeedX;
-            }
-            if (this.collisionDirection[2] || this.collisionDirection[3]) {
-                this.ballSpeedY = -this.ballSpeedY;
+        if (this.hasCollided) {
+            for (let object of this.objects) {
+                if (this.x - this.radius <= object.x + object.w) {
+                    // right side
+                    this.x = object.x + object.w + this.radius;
+                    this.ballSpeedX = -this.ballSpeedX;
+                }
+                else if (this.x + this.radius >= object.x) {
+                    // left side
+                    this.x = object.x - this.radius;
+                    this.ballSpeedX = -this.ballSpeedX;
+                }
+                else if (this.y - this.radius <= object.y + object.h) {
+                    // from bottom
+                    this.y = object.y + object.h;
+                    this.ballSpeedY = -this.ballSpeedY;
+                }
+                else if (this.y + this.radius >= object.y) {
+                    // from top
+                    this.y = object.y;
+                    this.ballSpeedY = -this.ballSpeedY;
+                }
             }
         }
         if ((!this.hasCollided() && this.x - this.radius <= 0) ||
             (!this.hasCollided() && this.x >= Canvas.WIDTH - this.radius)) {
             this.ballSpeedX = -this.ballSpeedX;
         }
-        if ((!this.hasCollided() && this.y - this.radius <= 0) ||
+        else if ((!this.hasCollided() && this.y - this.radius <= 0) ||
             (!this.hasCollided() && this.y >= Canvas.HEIGHT - this.radius)) {
             this.ballSpeedY = -this.ballSpeedY;
         }
