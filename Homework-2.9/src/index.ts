@@ -1,9 +1,7 @@
 class CanvasObject {
   constructor(public x: number, public y: number) {}
 
-  draw(ctx: CanvasRenderingContext2D) {
-    // This method will be overridden by subclasses
-  }
+  draw(context: CanvasRenderingContext2D) {}
 }
 
 class Block extends CanvasObject {
@@ -17,9 +15,9 @@ class Block extends CanvasObject {
     super(x, y);
   }
 
-  draw(ctx: CanvasRenderingContext2D) {
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+  draw(context: CanvasRenderingContext2D) {
+    context.fillStyle = this.color;
+    context.fillRect(this.x, this.y, this.width, this.height);
   }
 
   isOutOfCanvas(canvasWidth: number): boolean {
@@ -30,7 +28,7 @@ class Block extends CanvasObject {
 class Bullet extends CanvasObject {
   private dx: number = 0;
   private dy: number = 0;
-  public active: boolean = true;
+  public exists: boolean = true;
 
   constructor(
     x: number,
@@ -43,32 +41,32 @@ class Bullet extends CanvasObject {
     this.dy = -speed;
   }
 
-  draw(ctx: CanvasRenderingContext2D) {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    ctx.fillStyle = this.color;
-    ctx.fill();
+  draw(context: CanvasRenderingContext2D) {
+    context.beginPath();
+    context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    context.fillStyle = this.color;
+    context.fill();
   }
 
   update(targetX: number, targetY: number) {
-    if (!this.active) return;
+    if (!this.exists) return;
 
-    const angle = Math.atan2(targetY - this.y, targetX - this.x);
+    const angle = Math.atan2(targetY - this.y, targetX - this.x); // find angle
     this.dx = Math.cos(angle) * this.speed;
     this.dy = Math.sin(angle) * this.speed;
     this.x += this.dx;
     this.y += this.dy;
   }
 
-  collideWithBlock(block: Block): boolean {
-    if (!this.active) return false;
+  blockCollision(block: Block): boolean {
+    if (!this.exists) return false;
 
     const dx = block.x + block.width / 2 - this.x;
     const dy = block.y + block.height / 2 - this.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
 
     if (distance < block.width / 2 + this.radius) {
-      this.active = false;
+      this.exists = false;
       return true;
     }
 
@@ -92,17 +90,16 @@ class Turret extends Block {
 
 class Game {
   private canvas: HTMLCanvasElement;
-  private ctx: CanvasRenderingContext2D;
+  private context: CanvasRenderingContext2D;
   private turret: Turret;
   private blocks: Block[] = [];
   private bullets: Bullet[] = [];
 
   constructor() {
-    this.canvas = document.createElement("canvas");
-    this.ctx = this.canvas.getContext("2d")!;
+    this.canvas = document.getElementById("game_screen") as HTMLCanvasElement;
+    this.context = this.canvas.getContext("2d") as CanvasRenderingContext2D;
     this.canvas.width = 600;
     this.canvas.height = 400;
-    document.body.appendChild(this.canvas);
 
     this.turret = new Turret(
       Math.random() * (this.canvas.width - 50),
@@ -110,7 +107,7 @@ class Game {
     );
 
     this.spawnMovingBlocks();
-    this.animate();
+    setInterval(() => this.updateGame(), 16); // 60 fps
 
     document.addEventListener("click", (event) =>
       this.handleCanvasClick(event)
@@ -156,26 +153,26 @@ class Game {
     }, 1000);
   }
 
-  private animate() {
-    requestAnimationFrame(() => this.animate());
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  // a lot of code taken from google
+  private updateGame() {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    this.turret.draw(this.ctx);
+    this.turret.draw(this.context);
 
     this.blocks.forEach((block) => {
       block.x += 1;
-      block.draw(this.ctx);
+      block.draw(this.context);
     });
 
     this.bullets = this.bullets.filter((bullet) => {
       bullet.update(
-        this.blocks[0]?.x + this.blocks[0]?.width / 2 || 0,
-        this.blocks[0]?.y + this.blocks[0]?.height / 2 || 0
+        this.blocks[0].x + this.blocks[0]?.width / 2 || 0,
+        this.blocks[0].y + this.blocks[0]?.height / 2 || 0
       );
-      bullet.draw(this.ctx);
+      bullet.draw(this.context);
 
       const collided = this.blocks.some((block) =>
-        bullet.collideWithBlock(block)
+        bullet.blockCollision(block)
       );
       const inCanvas =
         bullet.x > 0 &&

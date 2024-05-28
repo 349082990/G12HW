@@ -1,110 +1,175 @@
+class MoveBallCommand {
+    ball;
+    dx;
+    dy;
+    constructor(ball, dx, dy) {
+        this.ball = ball;
+        this.dx = dx;
+        this.dy = dy;
+    }
+    execute() {
+        this.ball.move(this.dx, this.dy);
+    }
+}
+class Canvas {
+    static CANVAS_WIDTH = 600;
+    static CANVAS_HEIGHT = 400;
+    static _instance;
+    _element;
+    _context;
+    game;
+    constructor() {
+        this._element = document.getElementById("game_screen");
+        this._context = this._element.getContext("2d");
+        this._element.width = Canvas.CANVAS_WIDTH;
+        this._element.height = Canvas.CANVAS_HEIGHT;
+    }
+    static get instance() {
+        if (!Canvas._instance) {
+            Canvas._instance = new Canvas();
+        }
+        return Canvas._instance;
+    }
+    get context() {
+        return this._context;
+    }
+    initialize() {
+        this.game = new Game();
+    }
+}
 class GameObject {
-    canvas;
-    ctx;
     x;
     y;
     width;
     height;
-    constructor(canvas, ctx, x, y, width, height) {
-        this.canvas = canvas;
-        this.ctx = ctx;
+    color;
+    constructor(x, y, width, height, color) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.color = color;
+    }
+    draw() {
+        const context = Canvas.instance.context;
+        context.fillStyle = this.color;
+        context.fillRect(this.x, this.y, this.width, this.height);
     }
 }
-class Ball extends GameObject {
+class Ball {
+    x;
+    y;
     radius;
+    color;
+    objects;
+    ballSpeed = 7.5;
     dx;
     dy;
-    constructor(canvas, ctx) {
-        const radius = 15;
-        const x = canvas.width / 2;
-        const y = canvas.height / 2;
-        super(canvas, ctx, x, y, radius * 2, radius * 2);
+    constructor(x, y, radius, color, objects) {
+        this.x = x;
+        this.y = y;
         this.radius = radius;
-        this.dx = Math.random() > 0.5 ? 1 : -1;
-        this.dy = Math.random() > 0.5 ? 1 : -1;
+        this.color = color;
+        this.objects = objects;
+        const initialDirection = this.getRandomDirection();
+        this.dx = initialDirection.dx;
+        this.dy = initialDirection.dy;
+    }
+    getRandomDirection() {
+        const angle = Math.random() * Math.PI * 2;
+        return { dx: Math.cos(angle), dy: Math.sin(angle) };
     }
     draw() {
-        this.ctx.beginPath();
-        this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        this.ctx.fillStyle = "black";
-        this.ctx.fill();
-        this.ctx.closePath();
+        const context = Canvas.instance.context;
+        context.beginPath();
+        context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        context.fillStyle = this.color;
+        context.fill();
+        context.closePath();
+    }
+    move(dx, dy) {
+        this.x += dx * this.ballSpeed;
+        this.y += dy * this.ballSpeed;
+        this.checkCollision();
+    }
+    checkCollision() {
+        if (this.x + this.radius > Canvas.CANVAS_WIDTH ||
+            this.x - this.radius < 0) {
+            this.dx = -this.dx;
+            this.x = Math.max(this.radius, Math.min(this.x, Canvas.CANVAS_WIDTH - this.radius));
+        }
+        if (this.y + this.radius > Canvas.CANVAS_HEIGHT ||
+            this.y - this.radius < 0) {
+            this.dy = -this.dy;
+            this.y = Math.max(this.radius, Math.min(this.y, Canvas.CANVAS_HEIGHT - this.radius));
+        }
+        for (const object of this.objects) {
+            const nextX = this.x + this.dx * this.ballSpeed;
+            const nextY = this.y + this.dy * this.ballSpeed;
+            const horizontalCollision = nextX + this.radius > object.x &&
+                nextX - this.radius < object.x + object.width;
+            const verticalCollision = nextY + this.radius > object.y &&
+                nextY - this.radius < object.y + object.height;
+            if (horizontalCollision && verticalCollision) {
+                const collidesTop = this.y + this.radius <= object.y && nextY + this.radius > object.y;
+                const collidesBottom = this.y - this.radius >= object.y + object.height &&
+                    nextY - this.radius < object.y + object.height;
+                const collidesLeft = this.x + this.radius <= object.x && nextX + this.radius > object.x;
+                const collidesRight = this.x - this.radius >= object.x + object.width &&
+                    nextX - this.radius < object.x + object.width;
+                if (collidesTop || collidesBottom)
+                    this.dy = -this.dy;
+                if (collidesLeft || collidesRight)
+                    this.dx = -this.dx;
+                if (collidesTop)
+                    this.y = object.y - this.radius;
+                if (collidesBottom)
+                    this.y = object.y + object.height + this.radius;
+                if (collidesLeft)
+                    this.x = object.x - this.radius;
+                if (collidesRight)
+                    this.x = object.x + object.width + this.radius;
+            }
+        }
+    }
+}
+class Game {
+    objects = [];
+    ball;
+    FRAME_RATE = 60;
+    timeInterval = 1000 / this.FRAME_RATE;
+    constructor() {
+        this.createBlocks();
+        this.ball = new Ball(Canvas.CANVAS_WIDTH / 2, Canvas.CANVAS_HEIGHT / 2, 15, "black", this.objects);
+        setInterval(() => this.update(), this.timeInterval);
+    }
+    createBlocks() {
+        const firstRectX = Math.random() * (Canvas.CANVAS_WIDTH - 75);
+        const firstRectY = Math.random() * (Canvas.CANVAS_HEIGHT - 40);
+        const secondRectX = Math.random() * (Canvas.CANVAS_WIDTH - 200);
+        const secondRectY = Math.random() * (Canvas.CANVAS_HEIGHT - 20);
+        this.objects.push(new GameObject(firstRectX, firstRectY, 75, 40, "purple"));
+        this.objects.push(new GameObject(secondRectX, secondRectY, 200, 20, "purple"));
     }
     update() {
-        if (this.x + this.radius >= this.canvas.width ||
-            this.x - this.radius <= 0) {
-            this.dx = -this.dx;
+        this.clearScreen();
+        this.ball.move(this.ball.dx, this.ball.dy);
+        this.drawEverything();
+    }
+    drawEverything() {
+        for (const object of this.objects) {
+            object.draw();
         }
-        if (this.y + this.radius >= this.canvas.height ||
-            this.y - this.radius <= 0) {
-            this.dy = -this.dy;
-        }
-        this.x += this.dx;
-        this.y += this.dy;
+        this.ball.draw();
     }
-    checkCollisionWithRect(rect) {
-        const ballRight = this.x + this.radius;
-        const ballLeft = this.x - this.radius;
-        const ballTop = this.y - this.radius;
-        const ballBottom = this.y + this.radius;
-        if (ballRight > rect.x &&
-            ballLeft < rect.x + rect.width &&
-            ballBottom > rect.y &&
-            ballTop < rect.y + rect.height) {
-            const xOverlap = Math.min(ballRight - rect.x, rect.x + rect.width - ballLeft);
-            const yOverlap = Math.min(ballBottom - rect.y, rect.y + rect.height - ballTop);
-            if (xOverlap < yOverlap) {
-                this.dx = -this.dx;
-            }
-            else {
-                this.dy = -this.dy;
-            }
-        }
+    clearScreen() {
+        Canvas.instance.context.clearRect(0, 0, Canvas.CANVAS_WIDTH, Canvas.CANVAS_HEIGHT);
     }
 }
-class Rectangle extends GameObject {
-    ball;
-    constructor(canvas, ctx, ball, width, height) {
-        let x, y;
-        do {
-            x = Math.floor(Math.random() * (canvas.width - width));
-            y = Math.floor(Math.random() * (canvas.height - height));
-        } while (x + width > ball.x - ball.radius &&
-            x < ball.x + ball.radius &&
-            y + height > ball.y - ball.radius &&
-            y < ball.y + ball.radius);
-        super(canvas, ctx, x, y, width, height);
-        this.ball = ball;
-    }
-    draw() {
-        this.ctx.fillStyle = "purple";
-        this.ctx.fillRect(this.x, this.y, this.width, this.height);
+class Driver {
+    constructor() {
+        Canvas.instance.initialize();
     }
 }
-const canvas = document.createElement("canvas");
-canvas.width = 600;
-canvas.height = 400;
-document.body.appendChild(canvas);
-const ctx = canvas.getContext("2d");
-if (!ctx) {
-    throw new Error("Cannot get canvas context");
-}
-const ball = new Ball(canvas, ctx);
-const rect1 = new Rectangle(canvas, ctx, ball, 100, 50);
-const rect2 = new Rectangle(canvas, ctx, ball, 100, 50);
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ball.draw();
-    rect1.draw();
-    rect2.draw();
-    ball.update();
-    ball.checkCollisionWithRect(rect1);
-    ball.checkCollisionWithRect(rect2);
-    requestAnimationFrame(draw);
-}
-draw();
+new Driver();
 //# sourceMappingURL=index.js.map

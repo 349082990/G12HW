@@ -1,32 +1,71 @@
 class Circle {
-  x: number;
-  y: number;
-  radius: number;
-  speed: number;
-  movingRight: boolean; // Added to control movement direction
+  private _x: number;
+  private _y: number;
+  private _radius: number;
+  private _speed: number;
+  private _moveRight: boolean;
 
   constructor(x: number, y: number, radius: number, speed: number) {
-    this.x = x;
-    this.y = y;
-    this.radius = radius;
-    this.speed = speed;
-    this.movingRight = true; // Starts moving to the right
+    this._x = x;
+    this._y = y;
+    this._radius = radius;
+    this._speed = speed;
+    this._moveRight = true;
   }
 
-  move() {
-    // Move right until halfway, then move down
-    if (this.movingRight) {
-      if (this.x < canvas.width / 2) {
-        this.x += this.speed; // Move right
+  public get x(): number {
+    return this._x;
+  }
+
+  public set x(value: number) {
+    this._x = value;
+  }
+
+  public get y(): number {
+    return this._y;
+  }
+
+  public set y(value: number) {
+    this._y = value;
+  }
+
+  public get radius(): number {
+    return this._radius;
+  }
+
+  public set radius(value: number) {
+    this._radius = value;
+  }
+
+  public get speed(): number {
+    return this._speed;
+  }
+
+  public set speed(value: number) {
+    this._speed = value;
+  }
+
+  public get moveRight(): boolean {
+    return this._moveRight;
+  }
+
+  public set moveRight(value: boolean) {
+    this._moveRight = value;
+  }
+
+  public move(canvasW: number) {
+    if (this.moveRight) {
+      if (this._x < canvasW / 2) {
+        this._x += this._speed;
       } else {
-        this.movingRight = false; // Change direction to move down
+        this.moveRight = false;
       }
     } else {
-      this.y += this.speed; // Move down
+      this.y += this.speed;
     }
   }
 
-  draw(ctx: CanvasRenderingContext2D) {
+  public draw(ctx: CanvasRenderingContext2D) {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
     ctx.fillStyle = "blue";
@@ -36,69 +75,118 @@ class Circle {
 }
 
 class Path {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
+  private _x: number;
+  private _y: number;
+  private _width: number;
+  private _height: number;
 
   constructor(x: number, y: number, width: number, height: number) {
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
+    this._x = x;
+    this._y = y;
+    this._width = width;
+    this._height = height;
   }
 
-  draw(ctx: CanvasRenderingContext2D) {
-    ctx.beginPath();
-    ctx.moveTo(this.x, this.y + this.height / 2);
-    ctx.lineTo(this.x + this.width / 2, this.y + this.height / 2);
-    ctx.lineTo(this.x + this.width / 2, this.y + this.height);
-    ctx.strokeStyle = "grey";
-    ctx.lineWidth = 100;
-    ctx.stroke();
+  public get x(): number {
+    return this._x;
+  }
+
+  public set x(value: number) {
+    this._x = value;
+  }
+
+  public get y(): number {
+    return this._y;
+  }
+
+  public set y(value: number) {
+    this._y = value;
+  }
+
+  public get width(): number {
+    return this._width;
+  }
+
+  public set width(value: number) {
+    this._width = value;
+  }
+
+  public get height(): number {
+    return this._height;
+  }
+
+  public set height(value: number) {
+    this._height = value;
+  }
+
+  public draw(context: CanvasRenderingContext2D) {
+    context.beginPath();
+    context.moveTo(this.x, this.y + this._height / 2);
+    context.lineTo(this.x + this._width / 2, this.y + this._height / 2);
+    context.lineTo(this.x + this._width / 2, this.y + this._height);
+    context.strokeStyle = "black";
+    context.lineWidth = 100;
+    context.stroke();
   }
 }
 
-const canvas = document.createElement("canvas");
-canvas.width = 600;
-canvas.height = 400;
-document.body.appendChild(canvas);
+class Game {
+  private spawnInterval: number;
+  private updateInterval: number;
+  private canvas: HTMLCanvasElement;
+  private context: CanvasRenderingContext2D;
+  private path: Path;
+  private circles: Circle[] = [];
 
-const ctx = canvas.getContext("2d");
-if (!ctx) {
-  throw new Error("Canvas context not supported");
-}
+  constructor(canvas: HTMLCanvasElement) {
+    this.canvas = canvas;
+    this.context = this.canvas.getContext("2d") as CanvasRenderingContext2D;
 
-const path = new Path(0, 0, canvas.width, canvas.height);
-path.draw(ctx);
+    this.path = new Path(0, 0, this.canvas.width, this.canvas.height);
+    this.path.draw(this.context);
 
-const circles: Circle[] = [];
+    const self = this;
+    this.spawnInterval = setInterval(() => {
+      self.spawnCircle();
+    }, 2000);
+    this.updateInterval = setInterval(() => {
+      self.update();
+    }, 16); // 1000ms / 60 frames
+  }
 
-function spawnCircle() {
-  const circle = new Circle(0, canvas.height / 2 - 20, 20, 5); // Adjust starting position
-  circles.push(circle);
-}
+  private spawnCircle() {
+    const circle = new Circle(0, this.canvas.height / 2 - 20, 20, 5);
+    this.circles.push(circle);
+  }
 
-setInterval(spawnCircle, 2000);
+  private update() {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-function update() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+    this.path.draw(this.context);
 
-  path.draw(ctx);
+    for (let i = 0; i < this.circles.length; i++) {
+      const circle = this.circles[i];
+      circle.move(this.canvas.width);
+      circle.draw(this.context);
 
-  for (let i = 0; i < circles.length; i++) {
-    const circle = circles[i];
-    circle.move();
-    circle.draw(ctx);
-
-    // Remove circle if it leaves the screen
-    if (circle.y - circle.radius > canvas.height) {
-      circles.splice(i, 1);
-      i--;
+      if (circle.y - circle.radius > this.canvas.height) {
+        this.circles.splice(i, 1);
+        i--;
+      }
     }
   }
-
-  requestAnimationFrame(update);
 }
 
-update();
+class Driver {
+  private game: Game;
+
+  constructor() {
+    const canvas = document.getElementById("game_screen") as HTMLCanvasElement;
+    canvas.width = 600;
+    canvas.height = 400;
+
+    this.game = new Game(canvas);
+  }
+}
+
+new Driver();

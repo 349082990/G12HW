@@ -1,147 +1,213 @@
-interface Drawable {
-  draw(): void;
-  update(): void;
-  checkCollisionWithRect(rect: Rectangle): void;
+interface Command {
+  execute(): void;
 }
 
-abstract class GameObject implements Drawable {
+class MoveBallCommand implements Command {
+  constructor(private ball: Ball, private dx: number, private dy: number) {}
+
+  execute(): void {
+    this.ball.move(this.dx, this.dy);
+  }
+}
+
+class Canvas {
+  public static readonly CANVAS_WIDTH = 600;
+  public static readonly CANVAS_HEIGHT = 400;
+  private static _instance: Canvas;
+  private _element: HTMLCanvasElement;
+  private _context: CanvasRenderingContext2D;
+  private game: Game | undefined;
+
+  private constructor() {
+    this._element = document.getElementById("game_screen") as HTMLCanvasElement;
+    this._context = this._element.getContext("2d") as CanvasRenderingContext2D;
+    this._element.width = Canvas.CANVAS_WIDTH;
+    this._element.height = Canvas.CANVAS_HEIGHT;
+  }
+
+  public static get instance(): Canvas {
+    if (!Canvas._instance) {
+      Canvas._instance = new Canvas();
+    }
+    return Canvas._instance;
+  }
+
+  public get context(): CanvasRenderingContext2D {
+    return this._context;
+  }
+
+  public initialize(): void {
+    this.game = new Game();
+  }
+}
+
+class GameObject {
   constructor(
-    public canvas: HTMLCanvasElement,
-    public ctx: CanvasRenderingContext2D,
     public x: number,
     public y: number,
     public width: number,
-    public height: number
+    public height: number,
+    protected color: string
   ) {}
 
-  abstract draw(): void;
+  public draw(): void {
+    const context = Canvas.instance.context;
+    context.fillStyle = this.color;
+    context.fillRect(this.x, this.y, this.width, this.height);
+  }
 }
 
-class Ball extends GameObject {
-  radius: number;
-  dx: number;
-  dy: number;
+class Ball {
+  private ballSpeed: number = 7.5;
+  public dx: number;
+  public dy: number;
 
-  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
-    const radius = 15;
-    const x = canvas.width / 2;
-    const y = canvas.height / 2;
-    super(canvas, ctx, x, y, radius * 2, radius * 2);
-    this.radius = radius;
-    this.dx = Math.random() > 0.5 ? 1 : -1;
-    this.dy = Math.random() > 0.5 ? 1 : -1;
+  constructor(
+    public x: number,
+    public y: number,
+    public radius: number,
+    private color: string,
+    private objects: GameObject[]
+  ) {
+    const initialDirection = this.getRandomDirection();
+    this.dx = initialDirection.dx;
+    this.dy = initialDirection.dy;
   }
 
-  draw() {
-    this.ctx.beginPath();
-    this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    this.ctx.fillStyle = "black";
-    this.ctx.fill();
-    this.ctx.closePath();
+  private getRandomDirection(): { dx: number; dy: number } {
+    const angle = Math.random() * Math.PI * 2;
+    return { dx: Math.cos(angle), dy: Math.sin(angle) };
   }
 
-  update() {
+  public draw(): void {
+    const context = Canvas.instance.context;
+    context.beginPath();
+    context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    context.fillStyle = this.color;
+    context.fill();
+    context.closePath();
+  }
+
+  public move(dx: number, dy: number): void {
+    this.x += dx * this.ballSpeed;
+    this.y += dy * this.ballSpeed;
+    this.checkCollision();
+  }
+
+  private checkCollision(): void {
     if (
-      this.x + this.radius >= this.canvas.width ||
-      this.x - this.radius <= 0
+      this.x + this.radius > Canvas.CANVAS_WIDTH ||
+      this.x - this.radius < 0
     ) {
       this.dx = -this.dx;
+      this.x = Math.max(
+        this.radius,
+        Math.min(this.x, Canvas.CANVAS_WIDTH - this.radius)
+      );
     }
 
     if (
-      this.y + this.radius >= this.canvas.height ||
-      this.y - this.radius <= 0
+      this.y + this.radius > Canvas.CANVAS_HEIGHT ||
+      this.y - this.radius < 0
     ) {
       this.dy = -this.dy;
+      this.y = Math.max(
+        this.radius,
+        Math.min(this.y, Canvas.CANVAS_HEIGHT - this.radius)
+      );
     }
 
-    this.x += this.dx;
-    this.y += this.dy;
-  }
+    for (const object of this.objects) {
+      const nextX = this.x + this.dx * this.ballSpeed;
+      const nextY = this.y + this.dy * this.ballSpeed;
 
-  checkCollisionWithRect(rect: Rectangle) {
-    const ballRight = this.x + this.radius;
-    const ballLeft = this.x - this.radius;
-    const ballTop = this.y - this.radius;
-    const ballBottom = this.y + this.radius;
+      const horizontalCollision =
+        nextX + this.radius > object.x &&
+        nextX - this.radius < object.x + object.width;
+      const verticalCollision =
+        nextY + this.radius > object.y &&
+        nextY - this.radius < object.y + object.height;
 
-    if (
-      ballRight > rect.x &&
-      ballLeft < rect.x + rect.width &&
-      ballBottom > rect.y &&
-      ballTop < rect.y + rect.height
-    ) {
-      const xOverlap = Math.min(
-        ballRight - rect.x,
-        rect.x + rect.width - ballLeft
-      );
-      const yOverlap = Math.min(
-        ballBottom - rect.y,
-        rect.y + rect.height - ballTop
-      );
+      if (horizontalCollision && verticalCollision) {
+        const collidesTop =
+          this.y + this.radius <= object.y && nextY + this.radius > object.y;
+        const collidesBottom =
+          this.y - this.radius >= object.y + object.height &&
+          nextY - this.radius < object.y + object.height;
+        const collidesLeft =
+          this.x + this.radius <= object.x && nextX + this.radius > object.x;
+        const collidesRight =
+          this.x - this.radius >= object.x + object.width &&
+          nextX - this.radius < object.x + object.width;
 
-      if (xOverlap < yOverlap) {
-        this.dx = -this.dx;
-      } else {
-        this.dy = -this.dy;
+        if (collidesTop || collidesBottom) this.dy = -this.dy;
+        if (collidesLeft || collidesRight) this.dx = -this.dx;
+
+        if (collidesTop) this.y = object.y - this.radius;
+        if (collidesBottom) this.y = object.y + object.height + this.radius;
+        if (collidesLeft) this.x = object.x - this.radius;
+        if (collidesRight) this.x = object.x + object.width + this.radius;
       }
     }
   }
 }
 
-class Rectangle extends GameObject {
-  constructor(
-    canvas: HTMLCanvasElement,
-    ctx: CanvasRenderingContext2D,
-    private ball: Ball,
-    width: number,
-    height: number
-  ) {
-    let x, y;
-    do {
-      x = Math.floor(Math.random() * (canvas.width - width));
-      y = Math.floor(Math.random() * (canvas.height - height));
-    } while (
-      x + width > ball.x - ball.radius &&
-      x < ball.x + ball.radius &&
-      y + height > ball.y - ball.radius &&
-      y < ball.y + ball.radius
+class Game {
+  private objects: GameObject[] = [];
+  private ball: Ball;
+  private readonly FRAME_RATE = 60;
+  private readonly timeInterval = 1000 / this.FRAME_RATE;
+
+  constructor() {
+    this.createBlocks();
+    this.ball = new Ball(
+      Canvas.CANVAS_WIDTH / 2,
+      Canvas.CANVAS_HEIGHT / 2,
+      15,
+      "black",
+      this.objects
     );
-    super(canvas, ctx, x, y, width, height);
+    setInterval(() => this.update(), this.timeInterval);
   }
 
-  draw() {
-    this.ctx.fillStyle = "purple";
-    this.ctx.fillRect(this.x, this.y, this.width, this.height);
+  private createBlocks(): void {
+    const firstRectX = Math.random() * (Canvas.CANVAS_WIDTH - 75);
+    const firstRectY = Math.random() * (Canvas.CANVAS_HEIGHT - 40);
+    const secondRectX = Math.random() * (Canvas.CANVAS_WIDTH - 200);
+    const secondRectY = Math.random() * (Canvas.CANVAS_HEIGHT - 20);
+    this.objects.push(new GameObject(firstRectX, firstRectY, 75, 40, "purple"));
+    this.objects.push(
+      new GameObject(secondRectX, secondRectY, 200, 20, "purple")
+    );
+  }
+
+  private update(): void {
+    this.clearScreen();
+    this.ball.move(this.ball.dx, this.ball.dy);
+    this.drawEverything();
+  }
+
+  private drawEverything(): void {
+    for (const object of this.objects) {
+      object.draw();
+    }
+    this.ball.draw();
+  }
+
+  private clearScreen(): void {
+    Canvas.instance.context.clearRect(
+      0,
+      0,
+      Canvas.CANVAS_WIDTH,
+      Canvas.CANVAS_HEIGHT
+    );
   }
 }
 
-const canvas = document.createElement("canvas");
-canvas.width = 600;
-canvas.height = 400;
-document.body.appendChild(canvas);
-
-const ctx = canvas.getContext("2d");
-if (!ctx) {
-  throw new Error("Cannot get canvas context");
+class Driver {
+  constructor() {
+    Canvas.instance.initialize();
+  }
 }
 
-const ball = new Ball(canvas, ctx);
-const rect1 = new Rectangle(canvas, ctx, ball, 100, 50);
-const rect2 = new Rectangle(canvas, ctx, ball, 100, 50);
-
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  ball.draw();
-  rect1.draw();
-  rect2.draw();
-
-  ball.update();
-  ball.checkCollisionWithRect(rect1);
-  ball.checkCollisionWithRect(rect2);
-
-  requestAnimationFrame(draw);
-}
-
-draw();
+new Driver();

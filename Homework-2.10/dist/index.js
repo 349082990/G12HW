@@ -1,28 +1,57 @@
 class Circle {
-    x;
-    y;
-    radius;
-    speed;
-    movingRight; // Added to control movement direction
+    _x;
+    _y;
+    _radius;
+    _speed;
+    _moveRight;
     constructor(x, y, radius, speed) {
-        this.x = x;
-        this.y = y;
-        this.radius = radius;
-        this.speed = speed;
-        this.movingRight = true; // Starts moving to the right
+        this._x = x;
+        this._y = y;
+        this._radius = radius;
+        this._speed = speed;
+        this._moveRight = true;
     }
-    move() {
-        // Move right until halfway, then move down
-        if (this.movingRight) {
-            if (this.x < canvas.width / 2) {
-                this.x += this.speed; // Move right
+    get x() {
+        return this._x;
+    }
+    set x(value) {
+        this._x = value;
+    }
+    get y() {
+        return this._y;
+    }
+    set y(value) {
+        this._y = value;
+    }
+    get radius() {
+        return this._radius;
+    }
+    set radius(value) {
+        this._radius = value;
+    }
+    get speed() {
+        return this._speed;
+    }
+    set speed(value) {
+        this._speed = value;
+    }
+    get moveRight() {
+        return this._moveRight;
+    }
+    set moveRight(value) {
+        this._moveRight = value;
+    }
+    move(canvasW) {
+        if (this.moveRight) {
+            if (this._x < canvasW / 2) {
+                this._x += this._speed;
             }
             else {
-                this.movingRight = false; // Change direction to move down
+                this.moveRight = false;
             }
         }
         else {
-            this.y += this.speed; // Move down
+            this.y += this.speed;
         }
     }
     draw(ctx) {
@@ -34,56 +63,96 @@ class Circle {
     }
 }
 class Path {
-    x;
-    y;
-    width;
-    height;
+    _x;
+    _y;
+    _width;
+    _height;
     constructor(x, y, width, height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+        this._x = x;
+        this._y = y;
+        this._width = width;
+        this._height = height;
     }
-    draw(ctx) {
-        ctx.beginPath();
-        ctx.moveTo(this.x, this.y + this.height / 2);
-        ctx.lineTo(this.x + this.width / 2, this.y + this.height / 2);
-        ctx.lineTo(this.x + this.width / 2, this.y + this.height);
-        ctx.strokeStyle = "grey";
-        ctx.lineWidth = 100;
-        ctx.stroke();
+    get x() {
+        return this._x;
+    }
+    set x(value) {
+        this._x = value;
+    }
+    get y() {
+        return this._y;
+    }
+    set y(value) {
+        this._y = value;
+    }
+    get width() {
+        return this._width;
+    }
+    set width(value) {
+        this._width = value;
+    }
+    get height() {
+        return this._height;
+    }
+    set height(value) {
+        this._height = value;
+    }
+    draw(context) {
+        context.beginPath();
+        context.moveTo(this.x, this.y + this._height / 2);
+        context.lineTo(this.x + this._width / 2, this.y + this._height / 2);
+        context.lineTo(this.x + this._width / 2, this.y + this._height);
+        context.strokeStyle = "black";
+        context.lineWidth = 100;
+        context.stroke();
     }
 }
-const canvas = document.createElement("canvas");
-canvas.width = 600;
-canvas.height = 400;
-document.body.appendChild(canvas);
-const ctx = canvas.getContext("2d");
-if (!ctx) {
-    throw new Error("Canvas context not supported");
-}
-const path = new Path(0, 0, canvas.width, canvas.height);
-path.draw(ctx);
-const circles = [];
-function spawnCircle() {
-    const circle = new Circle(0, canvas.height / 2 - 20, 20, 5); // Adjust starting position
-    circles.push(circle);
-}
-setInterval(spawnCircle, 2000);
-function update() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    path.draw(ctx);
-    for (let i = 0; i < circles.length; i++) {
-        const circle = circles[i];
-        circle.move();
-        circle.draw(ctx);
-        // Remove circle if it leaves the screen
-        if (circle.y - circle.radius > canvas.height) {
-            circles.splice(i, 1);
-            i--;
+class Game {
+    spawnInterval;
+    updateInterval;
+    canvas;
+    context;
+    path;
+    circles = [];
+    constructor(canvas) {
+        this.canvas = canvas;
+        this.context = this.canvas.getContext("2d");
+        this.path = new Path(0, 0, this.canvas.width, this.canvas.height);
+        this.path.draw(this.context);
+        const self = this;
+        this.spawnInterval = setInterval(() => {
+            self.spawnCircle();
+        }, 2000);
+        this.updateInterval = setInterval(() => {
+            self.update();
+        }, 16); // 1000ms / 60 frames
+    }
+    spawnCircle() {
+        const circle = new Circle(0, this.canvas.height / 2 - 20, 20, 5);
+        this.circles.push(circle);
+    }
+    update() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.path.draw(this.context);
+        for (let i = 0; i < this.circles.length; i++) {
+            const circle = this.circles[i];
+            circle.move(this.canvas.width);
+            circle.draw(this.context);
+            if (circle.y - circle.radius > this.canvas.height) {
+                this.circles.splice(i, 1);
+                i--;
+            }
         }
     }
-    requestAnimationFrame(update);
 }
-update();
+class Driver {
+    game;
+    constructor() {
+        const canvas = document.getElementById("game_screen");
+        canvas.width = 600;
+        canvas.height = 400;
+        this.game = new Game(canvas);
+    }
+}
+new Driver();
 //# sourceMappingURL=index.js.map
