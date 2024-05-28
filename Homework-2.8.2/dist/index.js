@@ -1,21 +1,29 @@
-class Ball {
+class GameObject {
     canvas;
     ctx;
-    width;
-    height;
     x;
     y;
+    width;
+    height;
+    constructor(canvas, ctx, x, y, width, height) {
+        this.canvas = canvas;
+        this.ctx = ctx;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+}
+class Ball extends GameObject {
     radius;
     dx;
     dy;
-    constructor(canvas, ctx, width, height) {
-        this.canvas = canvas;
-        this.ctx = ctx;
-        this.width = width;
-        this.height = height;
-        this.radius = 15;
-        this.x = canvas.width / 2;
-        this.y = canvas.height / 2;
+    constructor(canvas, ctx) {
+        const radius = 15;
+        const x = canvas.width / 2;
+        const y = canvas.height / 2;
+        super(canvas, ctx, x, y, radius * 2, radius * 2);
+        this.radius = radius;
         this.dx = Math.random() > 0.5 ? 1 : -1;
         this.dy = Math.random() > 0.5 ? 1 : -1;
     }
@@ -58,38 +66,23 @@ class Ball {
         }
     }
 }
-class Rectangle {
-    canvas;
-    ctx;
+class Rectangle extends GameObject {
     ball;
-    rectWidth;
-    rectHeight;
-    x;
-    y;
-    width;
-    height;
-    constructor(canvas, ctx, ball, rectWidth, rectHeight) {
-        this.canvas = canvas;
-        this.ctx = ctx;
-        this.ball = ball;
-        this.rectWidth = rectWidth;
-        this.rectHeight = rectHeight;
-        this.width = rectWidth;
-        this.height = rectHeight;
+    constructor(canvas, ctx, ball, width, height) {
+        let x, y;
         do {
-            this.x = Math.floor(Math.random() * (canvas.width - this.width));
-            this.y = Math.floor(Math.random() * (canvas.height - this.height));
-        } while (this.isOverlapping(ball));
+            x = Math.floor(Math.random() * (canvas.width - width));
+            y = Math.floor(Math.random() * (canvas.height - height));
+        } while (x + width > ball.x - ball.radius &&
+            x < ball.x + ball.radius &&
+            y + height > ball.y - ball.radius &&
+            y < ball.y + ball.radius);
+        super(canvas, ctx, x, y, width, height);
+        this.ball = ball;
     }
     draw() {
         this.ctx.fillStyle = "purple";
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
-    }
-    isOverlapping(ball) {
-        return (ball.x + ball.radius > this.x &&
-            ball.x - ball.radius < this.x + this.width &&
-            ball.y + ball.radius > this.y &&
-            ball.y - ball.radius < this.y + this.height);
     }
 }
 const canvas = document.createElement("canvas");
@@ -100,7 +93,7 @@ const ctx = canvas.getContext("2d");
 if (!ctx) {
     throw new Error("Cannot get canvas context");
 }
-const ball = new Ball(canvas, ctx, canvas.width, canvas.height);
+const ball = new Ball(canvas, ctx);
 const rect1 = new Rectangle(canvas, ctx, ball, 100, 50);
 const rect2 = new Rectangle(canvas, ctx, ball, 100, 50);
 function draw() {

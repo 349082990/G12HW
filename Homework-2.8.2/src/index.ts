@@ -1,26 +1,33 @@
-interface GameObject {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
+interface Drawable {
+  draw(): void;
+  update(): void;
+  checkCollisionWithRect(rect: Rectangle): void;
 }
 
-class Ball implements GameObject {
-  x: number;
-  y: number;
+abstract class GameObject implements Drawable {
+  constructor(
+    public canvas: HTMLCanvasElement,
+    public ctx: CanvasRenderingContext2D,
+    public x: number,
+    public y: number,
+    public width: number,
+    public height: number
+  ) {}
+
+  abstract draw(): void;
+}
+
+class Ball extends GameObject {
   radius: number;
   dx: number;
   dy: number;
 
-  constructor(
-    public canvas: HTMLCanvasElement,
-    public ctx: CanvasRenderingContext2D,
-    public width: number,
-    public height: number
-  ) {
-    this.radius = 15;
-    this.x = canvas.width / 2;
-    this.y = canvas.height / 2;
+  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+    const radius = 15;
+    const x = canvas.width / 2;
+    const y = canvas.height / 2;
+    super(canvas, ctx, x, y, radius * 2, radius * 2);
+    this.radius = radius;
     this.dx = Math.random() > 0.5 ? 1 : -1;
     this.dy = Math.random() > 0.5 ? 1 : -1;
   }
@@ -82,39 +89,30 @@ class Ball implements GameObject {
   }
 }
 
-class Rectangle implements GameObject {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-
+class Rectangle extends GameObject {
   constructor(
-    public canvas: HTMLCanvasElement,
-    public ctx: CanvasRenderingContext2D,
-    public ball: Ball,
-    public rectWidth: number,
-    public rectHeight: number
+    canvas: HTMLCanvasElement,
+    ctx: CanvasRenderingContext2D,
+    private ball: Ball,
+    width: number,
+    height: number
   ) {
-    this.width = rectWidth;
-    this.height = rectHeight;
+    let x, y;
     do {
-      this.x = Math.floor(Math.random() * (canvas.width - this.width));
-      this.y = Math.floor(Math.random() * (canvas.height - this.height));
-    } while (this.isOverlapping(ball));
+      x = Math.floor(Math.random() * (canvas.width - width));
+      y = Math.floor(Math.random() * (canvas.height - height));
+    } while (
+      x + width > ball.x - ball.radius &&
+      x < ball.x + ball.radius &&
+      y + height > ball.y - ball.radius &&
+      y < ball.y + ball.radius
+    );
+    super(canvas, ctx, x, y, width, height);
   }
 
   draw() {
     this.ctx.fillStyle = "purple";
     this.ctx.fillRect(this.x, this.y, this.width, this.height);
-  }
-
-  isOverlapping(ball: Ball) {
-    return (
-      ball.x + ball.radius > this.x &&
-      ball.x - ball.radius < this.x + this.width &&
-      ball.y + ball.radius > this.y &&
-      ball.y - ball.radius < this.y + this.height
-    );
   }
 }
 
@@ -128,7 +126,7 @@ if (!ctx) {
   throw new Error("Cannot get canvas context");
 }
 
-const ball = new Ball(canvas, ctx, canvas.width, canvas.height);
+const ball = new Ball(canvas, ctx);
 const rect1 = new Rectangle(canvas, ctx, ball, 100, 50);
 const rect2 = new Rectangle(canvas, ctx, ball, 100, 50);
 

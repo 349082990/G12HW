@@ -1,11 +1,5 @@
 class CanvasObject {
-  x: number;
-  y: number;
-
-  constructor(x: number, y: number) {
-    this.x = x;
-    this.y = y;
-  }
+  constructor(public x: number, public y: number) {}
 
   draw(ctx: CanvasRenderingContext2D) {
     // This method will be overridden by subclasses
@@ -13,21 +7,14 @@ class CanvasObject {
 }
 
 class Block extends CanvasObject {
-  width: number;
-  height: number;
-  color: string;
-
   constructor(
     x: number,
     y: number,
-    width: number,
-    height: number,
-    color: string
+    public width: number,
+    public height: number,
+    public color: string
   ) {
     super(x, y);
-    this.width = width;
-    this.height = height;
-    this.color = color;
   }
 
   draw(ctx: CanvasRenderingContext2D) {
@@ -41,27 +28,19 @@ class Block extends CanvasObject {
 }
 
 class Bullet extends CanvasObject {
-  radius: number;
-  speed: number;
-  dx: number;
-  dy: number;
-  color: string;
-  active: boolean;
+  private dx: number = 0;
+  private dy: number = 0;
+  public active: boolean = true;
 
   constructor(
     x: number,
     y: number,
-    radius: number,
-    speed: number,
-    color: string
+    public radius: number,
+    private speed: number,
+    public color: string
   ) {
     super(x, y);
-    this.radius = radius;
-    this.speed = speed;
-    this.color = color;
-    this.dx = 0;
     this.dy = -speed;
-    this.active = true;
   }
 
   draw(ctx: CanvasRenderingContext2D) {
@@ -112,11 +91,11 @@ class Turret extends Block {
 }
 
 class Game {
-  canvas: HTMLCanvasElement;
-  ctx: CanvasRenderingContext2D;
-  turret: Turret;
-  blocks: Block[];
-  bullets: Bullet[];
+  private canvas: HTMLCanvasElement;
+  private ctx: CanvasRenderingContext2D;
+  private turret: Turret;
+  private blocks: Block[] = [];
+  private bullets: Bullet[] = [];
 
   constructor() {
     this.canvas = document.createElement("canvas");
@@ -129,31 +108,32 @@ class Game {
       Math.random() * (this.canvas.width - 50),
       this.canvas.height - 50
     );
-    this.blocks = [];
-    this.bullets = [];
 
     this.spawnMovingBlocks();
     this.animate();
 
-    document.addEventListener("click", (event) => {
-      const bullet = new Bullet(
-        this.turret.x + this.turret.width / 2,
-        this.turret.y + this.turret.height / 2,
-        5,
-        5,
-        "black"
-      );
-      this.bullets.push(bullet);
-    });
+    document.addEventListener("click", (event) =>
+      this.handleCanvasClick(event)
+    );
   }
 
-  spawnMovingBlocks() {
+  private handleCanvasClick(event: MouseEvent) {
+    const bullet = new Bullet(
+      this.turret.x + this.turret.width / 2,
+      this.turret.y + this.turret.height / 2,
+      5,
+      5,
+      "black"
+    );
+    this.bullets.push(bullet);
+  }
+
+  private spawnMovingBlocks() {
     setInterval(() => {
       if (
         this.blocks.length === 0 ||
         this.blocks[this.blocks.length - 1].isOutOfCanvas(this.canvas.width)
       ) {
-        // Delete blocks exiting the canvas
         this.blocks = this.blocks.filter(
           (block) => !block.isOutOfCanvas(this.canvas.width)
         );
@@ -169,16 +149,14 @@ class Game {
         );
         this.blocks.push(block);
 
-        // Update target position for bullets
         this.bullets.forEach((bullet) => {
-          // Target the latest block entering the canvas
           bullet.update(block.x + block.width / 2, block.y + block.height / 2);
         });
       }
     }, 1000);
   }
 
-  animate() {
+  private animate() {
     requestAnimationFrame(() => this.animate());
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -189,29 +167,22 @@ class Game {
       block.draw(this.ctx);
     });
 
-    this.bullets.forEach((bullet, bulletIndex) => {
+    this.bullets = this.bullets.filter((bullet) => {
       bullet.update(
-        this.blocks[0].x + this.blocks[0].width / 2,
-        this.blocks[0].y + this.blocks[0].height / 2
+        this.blocks[0]?.x + this.blocks[0]?.width / 2 || 0,
+        this.blocks[0]?.y + this.blocks[0]?.height / 2 || 0
       );
       bullet.draw(this.ctx);
 
-      // Check collision with blocks
-      this.blocks.forEach((block, blockIndex) => {
-        if (bullet.collideWithBlock(block)) {
-          this.bullets.splice(bulletIndex, 1);
-        }
-      });
-
-      // Remove bullet if out of canvas
-      if (
-        bullet.x < 0 ||
-        bullet.x > this.canvas.width ||
-        bullet.y < 0 ||
-        bullet.y > this.canvas.height
-      ) {
-        this.bullets.splice(bulletIndex, 1);
-      }
+      const collided = this.blocks.some((block) =>
+        bullet.collideWithBlock(block)
+      );
+      const inCanvas =
+        bullet.x > 0 &&
+        bullet.x < this.canvas.width &&
+        bullet.y > 0 &&
+        bullet.y < this.canvas.height;
+      return !collided && inCanvas;
     });
   }
 }
