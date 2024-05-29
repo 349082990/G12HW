@@ -105,6 +105,7 @@ class Game {
             }
         }, 1000);
     }
+    // a lot of code taken from google
     updateGame() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.turret.draw(this.context);

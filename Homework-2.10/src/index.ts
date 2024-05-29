@@ -124,7 +124,7 @@ class Path {
     context.moveTo(this.x, this.y + this._height / 2);
     context.lineTo(this.x + this._width / 2, this.y + this._height / 2);
     context.lineTo(this.x + this._width / 2, this.y + this._height);
-    context.strokeStyle = "black";
+    context.strokeStyle = "grey";
     context.lineWidth = 100;
     context.stroke();
   }
