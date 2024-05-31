@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-05-31T19:42:17.528Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0" etag="ppfwwg2LZy9twhEChB8A" version="24.4.13" type="github">
+<mxfile host="app.diagrams.net" modified="2024-05-31T19:44:54.701Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0" etag="GiaL64jXXd2w4SmvB-8B" version="24.4.13" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="899" dy="603" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -171,6 +171,15 @@
         </mxCell>
         <mxCell id="ufcKAMKwuoXVVG3p7ZwG-11" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="ufcKAMKwuoXVVG3p7ZwG-9">
           <mxGeometry y="50" width="83" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="ufcKAMKwuoXVVG3p7ZwG-12" value="&lt;div&gt;&lt;div&gt;&lt;font size=&quot;1&quot;&gt;&lt;b&gt;SpawnerTile&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="10" y="1060" width="106" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ufcKAMKwuoXVVG3p7ZwG-13" value="" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="ufcKAMKwuoXVVG3p7ZwG-12">
+          <mxGeometry y="30" width="106" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="ufcKAMKwuoXVVG3p7ZwG-14" value="+ get type(): string&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="ufcKAMKwuoXVVG3p7ZwG-12">
+          <mxGeometry y="40" width="106" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
