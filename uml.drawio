@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-06-03T17:52:15.868Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0" etag="Z4JXdf9YvuYhfr9jzGGs" version="24.4.13" type="github">
+<mxfile host="app.diagrams.net" modified="2024-06-03T18:02:13.975Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0" etag="loqzz7pymeUdYtJ69VfJ" version="24.4.13" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="473" dy="317" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="899" dy="603" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -324,6 +324,42 @@
         </mxCell>
         <mxCell id="KBjaNQLft9DsS-Ig-_3d-26" value="_ get instance(): Canvas&lt;div&gt;+ get context(): CanvasRenderingContext2D&lt;/div&gt;&lt;div&gt;+ startGame(): void&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="KBjaNQLft9DsS-Ig-_3d-24">
           <mxGeometry y="90" width="190" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KBjaNQLft9DsS-Ig-_3d-27" value="&lt;font size=&quot;1&quot;&gt;&lt;b&gt;&amp;lt;&amp;lt;enum&amp;gt;&amp;gt;&lt;/b&gt;&lt;/font&gt;&lt;div&gt;&lt;font size=&quot;1&quot;&gt;&lt;b&gt;Costs&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="945" y="930" width="100" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="KBjaNQLft9DsS-Ig-_3d-28" value="ENEMY = 10&lt;div&gt;BASIC = 50&lt;/div&gt;&lt;div&gt;TYPE2 = 100&lt;/div&gt;&lt;div&gt;TYPE3 = 150&lt;/div&gt;" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="KBjaNQLft9DsS-Ig-_3d-27">
+          <mxGeometry y="30" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="KBjaNQLft9DsS-Ig-_3d-29" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="KBjaNQLft9DsS-Ig-_3d-27">
+          <mxGeometry y="80" width="100" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="KBjaNQLft9DsS-Ig-_3d-30" value="&lt;div&gt;&lt;div&gt;&lt;font size=&quot;1&quot;&gt;&lt;b&gt;Coin&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1051" y="930" width="190" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="KBjaNQLft9DsS-Ig-_3d-31" value="- _totalCoins: number&lt;div&gt;- initialCoins: number&lt;/div&gt;" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="KBjaNQLft9DsS-Ig-_3d-30">
+          <mxGeometry y="30" width="190" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="KBjaNQLft9DsS-Ig-_3d-32" value="+ addCoin(amount: number): void&lt;div&gt;+ resetCoins(): void&lt;/div&gt;&lt;div&gt;+ useCoin(amount: number): boolean&lt;/div&gt;&lt;div&gt;+ get totalCoins(): number&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="KBjaNQLft9DsS-Ig-_3d-30">
+          <mxGeometry y="60" width="190" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="KBjaNQLft9DsS-Ig-_3d-33" value="&lt;div&gt;&lt;div&gt;&lt;font size=&quot;1&quot;&gt;&lt;b&gt;KillCounts&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1250" y="930" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="KBjaNQLft9DsS-Ig-_3d-34" value="- _totalKills: number&lt;div&gt;- initialKills: number&lt;/div&gt;" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="KBjaNQLft9DsS-Ig-_3d-33">
+          <mxGeometry y="30" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="KBjaNQLft9DsS-Ig-_3d-35" value="+ resetKills(): void&lt;div&gt;+ addKill(): void&lt;/div&gt;&lt;div&gt;+ get totalKills(): number&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="KBjaNQLft9DsS-Ig-_3d-33">
+          <mxGeometry y="60" width="140" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KBjaNQLft9DsS-Ig-_3d-36" value="&lt;font size=&quot;1&quot;&gt;&lt;b&gt;Health&lt;/b&gt;&lt;/font&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1410" y="930" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="KBjaNQLft9DsS-Ig-_3d-37" value="- _currentHealth: number&lt;div&gt;- initialHealth: number&lt;/div&gt;" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="KBjaNQLft9DsS-Ig-_3d-36">
+          <mxGeometry y="30" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="KBjaNQLft9DsS-Ig-_3d-38" value="+ resetHealth(): void&lt;div&gt;+ reduceHealth(): void&lt;/div&gt;&lt;div&gt;+ get currentHealth(): number&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="KBjaNQLft9DsS-Ig-_3d-36">
+          <mxGeometry y="60" width="140" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
