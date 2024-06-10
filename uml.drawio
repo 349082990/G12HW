@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-06-10T18:40:30.946Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0" etag="nvkZQvjhTevsnSB0jX1K" version="24.5.2" type="github">
+<mxfile host="app.diagrams.net" modified="2024-06-10T18:55:23.538Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0" etag="_yvbyTDJ9o5m5IaBskim" version="24.5.2" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="1426" dy="402" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -542,13 +542,13 @@
           <mxGeometry y="50" width="140" height="20" as="geometry" />
         </mxCell>
         <mxCell id="gwXnr_qc9FYQ8FYtVQT1-30" value="&lt;div&gt;&lt;div&gt;&lt;font size=&quot;1&quot;&gt;&lt;b&gt;ChainDamageTurret&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="-225" y="2380" width="260" height="210" as="geometry" />
+          <mxGeometry x="-225" y="2380" width="260" height="230" as="geometry" />
         </mxCell>
-        <mxCell id="gwXnr_qc9FYQ8FYtVQT1-31" value="&lt;div&gt;# _damage: number&lt;/div&gt;&lt;div&gt;- towerType: string&lt;/div&gt;&lt;div&gt;# center_x: number&lt;/div&gt;&lt;div&gt;# center_y: number&lt;/div&gt;&lt;div&gt;# shootingFrequency: number&lt;/div&gt;&lt;div&gt;# shootingCooldown: number&lt;/div&gt;&lt;div&gt;- lightningAmount: number&lt;/div&gt;&lt;div&gt;- lightningImages: [1 ordered][1 ordered]&lt;/div&gt;" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" parent="gwXnr_qc9FYQ8FYtVQT1-30" vertex="1">
-          <mxGeometry y="30" width="260" height="110" as="geometry" />
+        <mxCell id="gwXnr_qc9FYQ8FYtVQT1-31" value="&lt;div&gt;# _damage: number&lt;/div&gt;&lt;div&gt;- towerType: string&lt;/div&gt;&lt;div&gt;# center_x: number&lt;/div&gt;&lt;div&gt;# center_y: number&lt;/div&gt;&lt;div&gt;# shootingFrequency: number&lt;/div&gt;&lt;div&gt;# shootingCooldown: number&lt;/div&gt;&lt;div&gt;- lightningAmount: number&lt;/div&gt;&lt;div&gt;- lightningImages: [1 ordered][1 ordered]&lt;/div&gt;&lt;div&gt;- maxLightningAmounts: number&lt;/div&gt;&lt;div&gt;- isShooting: boolean&lt;/div&gt;&lt;div&gt;- lightningVisisble: boolean&lt;/div&gt;&lt;div&gt;- visibleCooldown: number&lt;/div&gt;" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" parent="gwXnr_qc9FYQ8FYtVQT1-30" vertex="1">
+          <mxGeometry y="30" width="260" height="140" as="geometry" />
         </mxCell>
-        <mxCell id="gwXnr_qc9FYQ8FYtVQT1-32" value="&lt;div&gt;+ updateSelf(): void&lt;/div&gt;+ setDirection(direction: number): void&lt;div&gt;+ setDirectionAndVelocityTowards(x: number, y: number): void&lt;/div&gt;&lt;div&gt;# setVelocitiesOnDirection(): void&lt;/div&gt;&lt;div&gt;# moveX(): void&lt;/div&gt;&lt;div&gt;# moveY(): void&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" parent="gwXnr_qc9FYQ8FYtVQT1-30" vertex="1">
-          <mxGeometry y="140" width="260" height="70" as="geometry" />
+        <mxCell id="gwXnr_qc9FYQ8FYtVQT1-32" value="&lt;div&gt;+ checkUpgradeLightnings(): boolean&lt;/div&gt;&lt;div&gt;- toggleIsShooting(): void&lt;/div&gt;&lt;div&gt;+ shoot(): void&amp;nbsp;&lt;/div&gt;&lt;div&gt;+ updateSelf(): void&lt;/div&gt;&lt;div&gt;+ drawSelf(): void&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" parent="gwXnr_qc9FYQ8FYtVQT1-30" vertex="1">
+          <mxGeometry y="170" width="260" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
