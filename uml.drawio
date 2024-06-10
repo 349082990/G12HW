@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-06-10T19:02:57.708Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0" etag="rmXtXlt3ybDTM8LiKoPl" version="24.5.2" type="github">
+<mxfile host="app.diagrams.net" modified="2024-06-10T19:21:34.459Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0" etag="61PFKjTcYy1IYDV1xVGC" version="24.5.2" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="1426" dy="402" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1539" dy="377" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -245,13 +245,13 @@
           <mxGeometry y="80" width="260" height="70" as="geometry" />
         </mxCell>
         <mxCell id="KBjaNQLft9DsS-Ig-_3d-0" value="&lt;div&gt;&lt;div&gt;&lt;font size=&quot;1&quot;&gt;&lt;b&gt;&amp;lt;&amp;lt;Enemy&amp;gt;&amp;gt;&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="1050" y="40" width="260" height="210" as="geometry" />
+          <mxGeometry x="1050" y="40" width="260" height="270" as="geometry" />
         </mxCell>
-        <mxCell id="KBjaNQLft9DsS-Ig-_3d-1" value="- waypoint: WaypointTile | undefined&lt;div&gt;- distanceTravelled: number&lt;/div&gt;&lt;div&gt;# _size: number&lt;/div&gt;&lt;div&gt;# _health: number&lt;/div&gt;" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" parent="KBjaNQLft9DsS-Ig-_3d-0" vertex="1">
-          <mxGeometry y="30" width="260" height="50" as="geometry" />
+        <mxCell id="KBjaNQLft9DsS-Ig-_3d-1" value="&lt;div&gt;- distanceTravelled: number&lt;/div&gt;+ hitted: boolean&lt;div&gt;# permanentWaypoints: WaypointTile[0... 120 ordered]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" parent="KBjaNQLft9DsS-Ig-_3d-0" vertex="1">
+          <mxGeometry y="30" width="260" height="110" as="geometry" />
         </mxCell>
         <mxCell id="KBjaNQLft9DsS-Ig-_3d-2" value="+ get size(): number&lt;div&gt;+ get health(): number&lt;/div&gt;&lt;div&gt;+ get distance(): number&lt;/div&gt;&lt;div&gt;+ assignPoint(point: WaypointTile): void&lt;/div&gt;&lt;div&gt;+ drawSelf(): void&lt;/div&gt;&lt;div&gt;+ deleteSelf(): void&lt;/div&gt;&lt;div&gt;+ takeDamage(dmg: number): void&lt;/div&gt;&lt;div&gt;+ checkDeletionConditions(): boolean&lt;/div&gt;&lt;div&gt;- collideWithWaypoint(): boolean&lt;/div&gt;&lt;div&gt;+ updateWaypointAndDirection(): void&amp;nbsp;&lt;/div&gt;&lt;div&gt;+ updateSelf(): void&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" parent="KBjaNQLft9DsS-Ig-_3d-0" vertex="1">
-          <mxGeometry y="80" width="260" height="130" as="geometry" />
+          <mxGeometry y="140" width="260" height="130" as="geometry" />
         </mxCell>
         <mxCell id="KBjaNQLft9DsS-Ig-_3d-3" value="&lt;font size=&quot;1&quot;&gt;&lt;b&gt;BasicEnemy&lt;/b&gt;&lt;/font&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="1330" y="40" width="80" height="90" as="geometry" />
