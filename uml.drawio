@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-06-10T15:14:45.501Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0" etag="eVXCb49FjK2lp7slW0Uw" version="24.5.2" type="github">
+<mxfile host="app.diagrams.net" modified="2024-06-10T15:17:01.843Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0" etag="qCBHbH_yztnElCullDZk" version="24.5.2" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="1726" dy="603" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1372" dy="365" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -506,13 +506,13 @@
           <mxGeometry y="40" width="106" height="20" as="geometry" />
         </mxCell>
         <mxCell id="gwXnr_qc9FYQ8FYtVQT1-12" value="&lt;b style=&quot;font-size: x-small;&quot;&gt;EmptyWaypointTile&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="504" y="1226" width="236" height="180" as="geometry" />
+          <mxGeometry x="504" y="1226" width="236" height="160" as="geometry" />
         </mxCell>
-        <mxCell id="gwXnr_qc9FYQ8FYtVQT1-13" value="- order: number" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="gwXnr_qc9FYQ8FYtVQT1-12">
+        <mxCell id="gwXnr_qc9FYQ8FYtVQT1-13" value="- baseSpawnInterval: number&lt;div&gt;- baseEnemiesPerWave: number&lt;/div&gt;&lt;div&gt;- cycleTime: number&lt;/div&gt;&lt;div&gt;- spawnCooldown: number&lt;/div&gt;&lt;div&gt;- spawnTimeReductionMultiplier: number&lt;/div&gt;&lt;div&gt;- wave: number&lt;/div&gt;&lt;div&gt;- enemiesSpawnedThisWave: number&lt;/div&gt;&lt;div&gt;- enemiesNumberIncrementMultiplier: number&lt;/div&gt;" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="gwXnr_qc9FYQ8FYtVQT1-12">
           <mxGeometry y="30" width="236" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="gwXnr_qc9FYQ8FYtVQT1-14" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="gwXnr_qc9FYQ8FYtVQT1-12">
-          <mxGeometry y="130" width="236" height="50" as="geometry" />
+        <mxCell id="gwXnr_qc9FYQ8FYtVQT1-14" value="&lt;div&gt;+ get type(): string&lt;/div&gt;&lt;div&gt;+ attemptToSpawnEnemy(): void&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="gwXnr_qc9FYQ8FYtVQT1-12">
+          <mxGeometry y="130" width="236" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
