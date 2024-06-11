@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-06-11T01:42:50.566Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0" etag="i0nnfGH71b31TTUD8xsD" version="24.4.10" type="github">
+<mxfile host="app.diagrams.net" modified="2024-06-11T01:43:03.915Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0" etag="0jLHKlHSmkemX0zNtJgr" version="24.4.10" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="1357" dy="301" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1746" dy="522" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -351,33 +351,6 @@
         </mxCell>
         <mxCell id="KBjaNQLft9DsS-Ig-_3d-38" value="+ resetHealth(): void&lt;div&gt;+ reduceHealth(): void&lt;/div&gt;&lt;div&gt;+ get currentHealth(): number&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" parent="KBjaNQLft9DsS-Ig-_3d-36" vertex="1">
           <mxGeometry y="60" width="140" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="KBjaNQLft9DsS-Ig-_3d-43" value="&lt;b&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;/b&gt;&lt;div&gt;&lt;b&gt;MenuProperties&lt;/b&gt;&lt;/div&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="945" y="1360" width="245" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="KBjaNQLft9DsS-Ig-_3d-44" value="" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" parent="KBjaNQLft9DsS-Ig-_3d-43" vertex="1">
-          <mxGeometry y="30" width="245" height="10" as="geometry" />
-        </mxCell>
-        <mxCell id="KBjaNQLft9DsS-Ig-_3d-45" value="+ addCommand(Command: Command): MenuProperties&lt;div&gt;+ executeCommand(): void&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" parent="KBjaNQLft9DsS-Ig-_3d-43" vertex="1">
-          <mxGeometry y="40" width="245" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="KBjaNQLft9DsS-Ig-_3d-46" value="&lt;div&gt;&lt;div&gt;&lt;font size=&quot;1&quot;&gt;&lt;b&gt;MenuButton&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="1215" y="1360" width="265" height="140" as="geometry" />
-        </mxCell>
-        <mxCell id="KBjaNQLft9DsS-Ig-_3d-47" value="_ buttonWidth: number&lt;div&gt;_ buttonHeight: number&lt;/div&gt;&lt;div&gt;- command: Command | undefined&lt;br&gt;&lt;/div&gt;&lt;div&gt;# title: string&lt;/div&gt;&lt;div&gt;# description: string&lt;/div&gt;" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" parent="KBjaNQLft9DsS-Ig-_3d-46" vertex="1">
-          <mxGeometry y="30" width="265" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="KBjaNQLft9DsS-Ig-_3d-48" value="+ addCommand(c: Command): MenuProperties&lt;div&gt;+ executeCommand(): void&lt;/div&gt;&lt;div&gt;+ drawSelf(): void&lt;/div&gt;&lt;div&gt;+ checkCoordinatesOnButton(x: number, y: number): boolean&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" parent="KBjaNQLft9DsS-Ig-_3d-46" vertex="1">
-          <mxGeometry y="90" width="265" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="KBjaNQLft9DsS-Ig-_3d-49" value="&lt;div&gt;&lt;div&gt;&lt;font size=&quot;1&quot;&gt;&lt;b&gt;CompositeMenu&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="940" y="1460" width="265" height="140" as="geometry" />
-        </mxCell>
-        <mxCell id="KBjaNQLft9DsS-Ig-_3d-50" value="# _buttons: MenuButton" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" parent="KBjaNQLft9DsS-Ig-_3d-49" vertex="1">
-          <mxGeometry y="30" width="265" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="KBjaNQLft9DsS-Ig-_3d-51" value="a" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" parent="KBjaNQLft9DsS-Ig-_3d-49" vertex="1">
-          <mxGeometry y="90" width="265" height="50" as="geometry" />
         </mxCell>
         <mxCell id="tF6paOjufz7PD2dId1pz-0" value="&lt;div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;&lt;b&gt;GameOverCommand&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="330" y="845" width="100" height="60" as="geometry" />
