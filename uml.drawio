@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-06-11T01:57:46.776Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0" etag="V9u3v6aReciD267V40Gf" version="24.4.10" type="github">
+<mxfile host="app.diagrams.net" modified="2024-06-11T02:12:45.064Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0" etag="M_8JAPMmCbjpk4uqcJbW" version="24.4.10" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="2140" dy="746" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1930" dy="626" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -524,13 +524,49 @@
           <mxGeometry y="140" width="260" height="90" as="geometry" />
         </mxCell>
         <mxCell id="ZGAan6onRMTRyE6NbdSa-0" value="&lt;font size=&quot;1&quot;&gt;&lt;b&gt;Game&lt;/b&gt;&lt;/font&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="900" y="1220" width="290" height="470" as="geometry" />
+          <mxGeometry x="920" y="1200" width="290" height="470" as="geometry" />
         </mxCell>
         <mxCell id="ZGAan6onRMTRyE6NbdSa-1" value="_ _instance: Game |&amp;nbsp; undefined&lt;div&gt;+ paused: boolean&lt;/div&gt;&lt;div&gt;- FPS: number&lt;/div&gt;&lt;div&gt;- timeInterval: number&lt;/div&gt;&lt;div&gt;- map: GameMap: GameMap&lt;/div&gt;&lt;div&gt;- _mainMenu: CompositeMenu&lt;/div&gt;&lt;div&gt;- _gameOverMenu: CompositeMenu&lt;/div&gt;&lt;div&gt;- _enemies: Enemy[0...* unordered]&lt;/div&gt;&lt;div&gt;- bullets: Bullet[0...* unordered]&lt;/div&gt;&lt;div&gt;- turrets: Turret[0...* unordered]&lt;/div&gt;&lt;div&gt;- lasers: hitBox[0...* unordered]&lt;/div&gt;&lt;div&gt;+ controller: PlayerController&lt;/div&gt;&lt;div&gt;+ pathlessGamemode: boolean&lt;/div&gt;&lt;div&gt;+ gameLoop: any&lt;/div&gt;&lt;div&gt;- sideGameInfoManager: ManageSideGameInfo&lt;/div&gt;" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="ZGAan6onRMTRyE6NbdSa-0">
           <mxGeometry y="30" width="290" height="170" as="geometry" />
         </mxCell>
         <mxCell id="ZGAan6onRMTRyE6NbdSa-2" value="&lt;div&gt;_ get instance(): Game&lt;/div&gt;&lt;div&gt;+ get enemies(): Enemy[]&lt;/div&gt;&lt;div&gt;+ get mainMenu(): compositeMenu&lt;/div&gt;&lt;div&gt;+ get gameOverMenu(): compositeMenu&lt;/div&gt;&lt;div&gt;+ start(): void&lt;/div&gt;&lt;div&gt;+ composeMainMenu(): void&lt;/div&gt;&lt;div&gt;+ composeMapMenu(): void&lt;/div&gt;&lt;div&gt;+ composeGameOverMenu(): void&lt;/div&gt;&lt;div&gt;+ playGame(): void&lt;/div&gt;&lt;div&gt;+ togglePause(): void&lt;/div&gt;&lt;div&gt;+ checkGameOver(): void&lt;/div&gt;&lt;div&gt;+ resetGame(): void&lt;/div&gt;&lt;div&gt;+ spawnEnemy: void&lt;/div&gt;&lt;div&gt;+ deleteBullet(bullet: Bullet): void&lt;/div&gt;&lt;div&gt;+ deleteEnemy(enemy: Enemy): void&lt;/div&gt;&lt;div&gt;+ addNewBullet(b: Bullet): void&lt;/div&gt;&lt;div&gt;+ updateEnemyOrder(): void&lt;/div&gt;&lt;div&gt;+ updateAllEnemyPathings(): void&lt;/div&gt;&lt;div&gt;- updateEverything(): void&lt;/div&gt;&lt;div&gt;+ drawEverything(): void&lt;/div&gt;&lt;div&gt;+ clearScreen(): void&lt;/div&gt;&lt;div&gt;+ getPathFromPointUntilEnd(x: number, y: number): number[][] | null&lt;/div&gt;&lt;div&gt;+ pathAvailableFromPoint(x: number, y: number): void&lt;/div&gt;&lt;div&gt;+ pathAvailable(): boolean&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="ZGAan6onRMTRyE6NbdSa-0">
           <mxGeometry y="200" width="290" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="ZGAan6onRMTRyE6NbdSa-3" value="&lt;b&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;/b&gt;&lt;div&gt;&lt;b&gt;MenuProperties&lt;/b&gt;&lt;/div&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="870" y="1800" width="240" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ZGAan6onRMTRyE6NbdSa-4" value="" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="ZGAan6onRMTRyE6NbdSa-3">
+          <mxGeometry y="30" width="240" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="ZGAan6onRMTRyE6NbdSa-5" value="+ addCommand(Command: Command): MenuProperties&lt;div&gt;+ executeCommand(): void&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="ZGAan6onRMTRyE6NbdSa-3">
+          <mxGeometry y="40" width="240" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ZGAan6onRMTRyE6NbdSa-6" value="&lt;font size=&quot;1&quot;&gt;&lt;b&gt;MenuButton&lt;/b&gt;&lt;/font&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1136" y="1800" width="264" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="ZGAan6onRMTRyE6NbdSa-7" value="_ buttonWidth: number&lt;div&gt;_ buttonHeight: number&lt;/div&gt;&lt;div&gt;- command: Command | undefined&lt;/div&gt;&lt;div&gt;# title: string&lt;/div&gt;&lt;div&gt;# description: string&lt;/div&gt;" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="ZGAan6onRMTRyE6NbdSa-6">
+          <mxGeometry y="30" width="264" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZGAan6onRMTRyE6NbdSa-8" value="&lt;div&gt;+ addCommand(c: Command): MenuProperties&lt;/div&gt;&lt;div&gt;+ executeCommand(): void&lt;/div&gt;&lt;div&gt;+ drawSelf(): void&lt;/div&gt;&lt;div&gt;+ checkCoordinatesOnButton(x: number, y: number): boolean&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="ZGAan6onRMTRyE6NbdSa-6">
+          <mxGeometry y="90" width="264" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ZGAan6onRMTRyE6NbdSa-9" value="&lt;font size=&quot;1&quot;&gt;&lt;b&gt;CompositeMenu&lt;/b&gt;&lt;/font&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1445" y="1800" width="240" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="ZGAan6onRMTRyE6NbdSa-10" value="# _buttons: MenuButton[0...* unordered]&lt;div&gt;# command: Command | undefined&lt;br&gt;&lt;/div&gt;&lt;div&gt;# title: string&lt;/div&gt;" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="ZGAan6onRMTRyE6NbdSa-9">
+          <mxGeometry y="30" width="240" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ZGAan6onRMTRyE6NbdSa-11" value="&lt;div&gt;+ addCommand(c: Command): CompositeMenu&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;+ get buttons(): MenuButton[]&lt;/div&gt;&lt;div&gt;+ executeCommand(): void&lt;/div&gt;&lt;div&gt;+ drawAllButtons(): void&lt;/div&gt;&lt;div&gt;+ addMenuButton(item: MenuButton): CompositeMenu&lt;/div&gt;&lt;div&gt;+ drawMenuAndMenuButtons(): void&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="ZGAan6onRMTRyE6NbdSa-9">
+          <mxGeometry y="70" width="240" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ZGAan6onRMTRyE6NbdSa-12" value="&lt;font size=&quot;1&quot;&gt;&lt;b&gt;hitBox&lt;/b&gt;&lt;/font&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="920" y="2110" width="300" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="ZGAan6onRMTRyE6NbdSa-13" value="- newX: number&lt;div&gt;- newY: number&lt;/div&gt;&lt;div&gt;- newW: number&lt;/div&gt;&lt;div&gt;- newH: number&lt;/div&gt;&lt;div&gt;+ rotationAngle: number&lt;/div&gt;&lt;div&gt;+ isRotating: boolean&lt;/div&gt;&lt;div&gt;+ isShooting: boolean&lt;/div&gt;&lt;div&gt;- img: Image&lt;/div&gt;&lt;div&gt;# parentTurret: Turret&lt;/div&gt;" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="ZGAan6onRMTRyE6NbdSa-12">
+          <mxGeometry y="30" width="300" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="ZGAan6onRMTRyE6NbdSa-14" value="&lt;div&gt;+ drawSelf(): void&lt;/div&gt;&lt;div&gt;- checkRotation(): void&lt;/div&gt;&lt;div&gt;- rotate0: void&lt;/div&gt;&lt;div&gt;- rotate90: void&lt;/div&gt;&lt;div&gt;- rotate180: void&lt;/div&gt;&lt;div&gt;- rotate270: void&lt;/div&gt;&lt;div&gt;- changeCoordinates(x: number, y: number, w: number, h: number): void&lt;/div&gt;&lt;div&gt;+ draw(): void&lt;/div&gt;&lt;div&gt;+ checkCollisionWithAllEnemies(): void&lt;/div&gt;&lt;div&gt;- mouseCursorDirection(event: MouseEvent): void&lt;/div&gt;&lt;div&gt;- linearDiagonal(m: number, x: number, b: number): void&lt;/div&gt;&lt;div&gt;- checkCollisionWithEnemy(enemy: Enemy): boolean&lt;/div&gt;&lt;div&gt;- HandleMouseClickEvent(event: mouseEvent): void&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="ZGAan6onRMTRyE6NbdSa-12">
+          <mxGeometry y="140" width="300" height="150" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
